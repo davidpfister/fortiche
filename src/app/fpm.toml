@@ -1,0 +1,23 @@
+name = "app_f"
+version = "1.0.0"
+maintainer = "davidpfister"
+author = "davidpfister"
+description = "Application framework using preprocessing"
+categories = ["app"]
+keywords = ["app", "preprocessing"]
+homepage = "https://github.com/davidpfister/app.f"
+
+
+[build]
+auto-tests = false
+
+[library]
+include-dir = "include"
+
+[preprocess]
+cpp.suffixes = ["F90", "f90"]
+cpp.macros = ["_WIN32", "_FPM"]
+
+[[test]]
+name       = "test_app"
+source-dir = "tests"

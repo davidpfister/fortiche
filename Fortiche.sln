@@ -1,0 +1,82 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.34729.46
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "App.Tests", "src\app\tests\App.Tests.vfproj", "{3029D10D-AE30-4918-9658-E07B07940E31}"
+EndProject
+Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "Assert.Tests", "src\assert\tests\Assert.Tests.vfproj", "{18494DE3-13CE-448A-A5D2-67D3E09FF2F5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{EBEE1C17-2CDC-490A-B68A-7A9738BFC9F7}"
+	ProjectSection(SolutionItems) = preProject
+		src\app\README.md = src\app\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "include", "include", "{4371ED28-59B7-4B59-92B6-128D051CF3A4}"
+	ProjectSection(SolutionItems) = preProject
+		src\app\include\app.inc = src\app\include\app.inc
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F31A2303-D9AA-4B31-80C7-DD618134186F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assert", "assert", "{7EE1D512-B866-43ED-A12D-0BE52A53A52D}"
+	ProjectSection(SolutionItems) = preProject
+		src\assert\README.md = src\assert\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "include", "include", "{D55821CC-E882-467D-AA98-31C27745E2A4}"
+	ProjectSection(SolutionItems) = preProject
+		src\assert\include\assert.inc = src\assert\include\assert.inc
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{141DB4D5-2F09-4653-92A0-3CB868050967}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{56121498-6234-4357-8353-EAA51B74654A}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5BF77C8A-3663-4932-B096-F30E6D53FE70}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3029D10D-AE30-4918-9658-E07B07940E31}.Debug|x64.ActiveCfg = Debug|x64
+		{3029D10D-AE30-4918-9658-E07B07940E31}.Debug|x64.Build.0 = Debug|x64
+		{3029D10D-AE30-4918-9658-E07B07940E31}.Debug|x86.ActiveCfg = Debug|Win32
+		{3029D10D-AE30-4918-9658-E07B07940E31}.Debug|x86.Build.0 = Debug|Win32
+		{3029D10D-AE30-4918-9658-E07B07940E31}.Release|x64.ActiveCfg = Release|x64
+		{3029D10D-AE30-4918-9658-E07B07940E31}.Release|x64.Build.0 = Release|x64
+		{3029D10D-AE30-4918-9658-E07B07940E31}.Release|x86.ActiveCfg = Release|Win32
+		{3029D10D-AE30-4918-9658-E07B07940E31}.Release|x86.Build.0 = Release|Win32
+		{18494DE3-13CE-448A-A5D2-67D3E09FF2F5}.Debug|x64.ActiveCfg = Debug|x64
+		{18494DE3-13CE-448A-A5D2-67D3E09FF2F5}.Debug|x64.Build.0 = Debug|x64
+		{18494DE3-13CE-448A-A5D2-67D3E09FF2F5}.Debug|x86.ActiveCfg = Debug|Win32
+		{18494DE3-13CE-448A-A5D2-67D3E09FF2F5}.Debug|x86.Build.0 = Debug|Win32
+		{18494DE3-13CE-448A-A5D2-67D3E09FF2F5}.Release|x64.ActiveCfg = Release|x64
+		{18494DE3-13CE-448A-A5D2-67D3E09FF2F5}.Release|x64.Build.0 = Release|x64
+		{18494DE3-13CE-448A-A5D2-67D3E09FF2F5}.Release|x86.ActiveCfg = Release|Win32
+		{18494DE3-13CE-448A-A5D2-67D3E09FF2F5}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3029D10D-AE30-4918-9658-E07B07940E31} = {F31A2303-D9AA-4B31-80C7-DD618134186F}
+		{18494DE3-13CE-448A-A5D2-67D3E09FF2F5} = {141DB4D5-2F09-4653-92A0-3CB868050967}
+		{EBEE1C17-2CDC-490A-B68A-7A9738BFC9F7} = {5BF77C8A-3663-4932-B096-F30E6D53FE70}
+		{4371ED28-59B7-4B59-92B6-128D051CF3A4} = {EBEE1C17-2CDC-490A-B68A-7A9738BFC9F7}
+		{F31A2303-D9AA-4B31-80C7-DD618134186F} = {EBEE1C17-2CDC-490A-B68A-7A9738BFC9F7}
+		{7EE1D512-B866-43ED-A12D-0BE52A53A52D} = {5BF77C8A-3663-4932-B096-F30E6D53FE70}
+		{D55821CC-E882-467D-AA98-31C27745E2A4} = {7EE1D512-B866-43ED-A12D-0BE52A53A52D}
+		{141DB4D5-2F09-4653-92A0-3CB868050967} = {7EE1D512-B866-43ED-A12D-0BE52A53A52D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {53724077-B449-462C-8827-BEBD88C8F483}
+	EndGlobalSection
+EndGlobal
