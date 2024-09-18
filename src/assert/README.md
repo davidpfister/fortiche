@@ -1,7 +1,7 @@
-# Assert.f
-'assert.f' is a single-file, dependency-free, and simple micro framework for unit testing in fortran.
+# Assert
+'assert' is a single-file, dependency-free, and simple micro framework for unit testing in fortran.
 
-## Welcome to the Assert.f micro test framework
+## Welcome to the Assert micro test framework
 
 ### Getting Started
 We recommend starting from the test cases present in this repository. 
@@ -94,9 +94,9 @@ fpp
 ```
 fpp -I../include main.f90 > main.fpp
 ```
-## Contributing to assert.f
+## Contributing to assert
 ### Reporting Issues
-Issues, including bugs and feature requests, can be reported at https://github.com/davidpfister/assert.f/issues
+Issues, including bugs and feature requests, can be reported at https://github.com/davidpfister/fortiche/issues
 
 ### Contributing
 If you want to help resolve any open issues you are more than welcome to do so.

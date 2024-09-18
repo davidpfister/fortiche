@@ -5,7 +5,7 @@ author = "davidpfister"
 description = "Simple assertion methods for unit testing"
 categories = ["unit tests"]
 keywords = ["assert", "test"]
-homepage = "https://github.com/davidpfister/assert.f"
+homepage = "https://github.com/davidpfister/"
 
 
 [build]
