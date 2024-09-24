@@ -1,11 +1,11 @@
-name = "app"
+name = "logging"
 version = "1.0.0"
 maintainer = "davidpfister"
 author = "davidpfister"
-description = "Application framework using preprocessing"
+description = "Simple logging library"
 categories = ["general"]
-keywords = ["app", "preprocessing"]
-homepage = "https://github.com/davidpfister/app.f"
+keywords = ["info", "debug", "fatal", "error", "warn", "debug"]
+homepage = "https://github.com/davidpfister/"
 
 
 [build]
@@ -19,5 +19,5 @@ cpp.suffixes = ["F90", "f90"]
 cpp.macros = ["_WIN32", "_FPM"]
 
 [[test]]
-name       = "test_app"
+name       = "test_log"
 source-dir = "tests"

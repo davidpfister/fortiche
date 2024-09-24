@@ -13,7 +13,7 @@ module test_object_type
 
 end module
 
-#include <assert.inc>
+#include "../include/assertion.inc"
 TESTPROGRAM(main)
 
     TEST(string_tests)

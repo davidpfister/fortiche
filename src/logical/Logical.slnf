@@ -2,7 +2,7 @@
   "solution": {
     "path": "..\\..\\Fortiche.sln",
     "projects": [
-      "src\\assert\\tests\\Assert.Tests.vfproj"
+      "src\\logical\\tests\\Logical.Tests.vfproj"
     ]
   }
 }

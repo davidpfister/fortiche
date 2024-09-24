@@ -1,0 +1,12 @@
+&OUTPUT
+ TEST_OBJECT_%MAXCALLS=10         ,
+ TEST_OBJECT_%CSV_UNIT=-10        ,
+ TEST_OBJECT_%MINTIME=  50.000000000000000     ,
+ TEST_OBJECT_%MAXTIME=  100.00000000000000     ,
+ TEST_OBJECT_%OVERHEAD=  0.0000000000000000     ,
+ TEST_OBJECT_%SAMPLING_WINDOW=10         ,
+ TEST_OBJECT_%SSD_THRESHOLD=  2.5000000000000001E-002,
+ TEST_OBJECT_%SKIP_PRELUDE=F,
+ TEST_OBJECT_%COUNT=0          ,
+ TEST_OBJECT_%NAME='                                                                                                                                                                                                        ',
+ /

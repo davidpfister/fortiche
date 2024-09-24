@@ -1,0 +1,8 @@
+{
+  "solution": {
+    "path": "..\\..\\Fortiche.sln",
+    "projects": [
+      "src\\assertion\\tests\\Assertion.Tests.vfproj"
+    ]
+  }
+}

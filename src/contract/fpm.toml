@@ -1,11 +1,11 @@
-name = "app"
+name = "contract"
 version = "1.0.0"
 maintainer = "davidpfister"
 author = "davidpfister"
-description = "Application framework using preprocessing"
+description = "Implements contract based inheritance and multiple inheritance"
 categories = ["general"]
-keywords = ["app", "preprocessing"]
-homepage = "https://github.com/davidpfister/app.f"
+keywords = ["oop", "inheritance"]
+homepage = "https://github.com/davidpfister/"
 
 
 [build]
@@ -16,8 +16,8 @@ include-dir = "include"
 
 [preprocess]
 cpp.suffixes = ["F90", "f90"]
-cpp.macros = ["_WIN32", "_FPM"]
+cpp.macros = ["_FPM"]
 
 [[test]]
-name       = "test_app"
+name       = "test_contract"
 source-dir = "tests"

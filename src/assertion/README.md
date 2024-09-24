@@ -1,14 +1,12 @@
-# Assert
-'assert' is a single-file, dependency-free, and simple micro framework for unit testing in fortran.
+# Assertion
+'assertion' is a single-file, dependency-free, and simple micro framework for unit testing in fortran.
 
-## Welcome to the Assert micro test framework
-
-### Getting Started
+## Getting Started
 We recommend starting from the test cases present in this repository. 
 They normally are good starting material to get familiar with the library.
 
 ```fortran
-#include "../include/assert.inc"
+#include "../include/assertion.inc"
 TESTPROGRAM(main)
 
     TEST(string_tests)
@@ -37,9 +35,10 @@ The output would look like this
 [----------] Ran   3 tests from string_tests
 [  PASSED  ]   3 tests from string_tests( 0.000E+00 ms total)
 ```
+
 ## Features
 - Simple, single-file, dependency-free micro test framework
-Adding the assertion into your test project is easy as pie. Simply include the file assert.inc into your code. This can either be done by specifying the relative path to the file (e.g. `#include "../include/assert.inc"`) or in the toml file by adding the folder in which the file assert.inc stands, directly under `[library]`, i.e.`include-dir = "include"`
+Adding the assertion into your test project is easy as pie. Simply include the file assertion.inc into your code. This can either be done by specifying the relative path to the file (e.g. `#include "../include/assertion.inc"`) or in the toml file by adding the folder in which the file assertion.inc stands, directly under `[library]`, i.e.`include-dir = "include"`
 - Color output
 - Modeled after the assertions available in GoogleTest \
 It should contain enough assertions to get you started. More assertion can easily be added.
@@ -77,7 +76,7 @@ ASSERT/EXPECT_SAME is an attempt to create a generic equality comparer that shou
 
 ## Developers Corner
 The library heavily relies on pre-processing (using cpp or fpp). 
-In order to simplify the development of the single file include/assert.inc we recommend to map the extension '.inc' with fortran highlighting settings in vscode. 
+In order to simplify the development of the single file include/assertion.inc we recommend to map the extension '.inc' with fortran highlighting settings in vscode. 
 To do so, 
 
 > `Ctrl`+`Shift`+`P` \
@@ -94,16 +93,3 @@ fpp
 ```
 fpp -I../include main.f90 > main.fpp
 ```
-## Contributing to assert
-### Reporting Issues
-Issues, including bugs and feature requests, can be reported at https://github.com/davidpfister/fortiche/issues
-
-### Contributing
-If you want to help resolve any open issues you are more than welcome to do so.
-You can do the following :
-- Fork this repository
-- Insert your fixes and commit your changes to your fork. Be sure to include any new additional tests to demonstrate the new feature or bug fix.
-- Open a pull request from your fork to this upstream repository.
-- Work with the upstream reviewer to merge your changes.
-
-The style guide used in this project is the one implemented in the fortran standard library, [stdlib](https://github.com/fortran-lang/stdlib/blob/master/STYLE_GUIDE.md)

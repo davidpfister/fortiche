@@ -25,16 +25,6 @@
 ! THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 ! (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 ! OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-# ifdef __GFORTRAN__
-#    define macro_same(A) A
-#    define macro_cat2(A,B) macro_same(A)B
-#    define macro_cat3(A,B,C) macro_cat2(A,B)C
-#    define macro_stringify(A) "A"
-# else
-#    define macro_cat2(A,B) A ## B
-#    define macro_cat3(A,B,C) A ## B ## C
-#    define macro_stringify(A) #A
-# endif
 module applibrary
 	implicit none; private
 

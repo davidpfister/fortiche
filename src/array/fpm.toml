@@ -1,11 +1,11 @@
-name = "app"
+name = "array"
 version = "1.0.0"
 maintainer = "davidpfister"
 author = "davidpfister"
-description = "Application framework using preprocessing"
+description = "Add reallocate and risize to fortran keywords"
 categories = ["general"]
-keywords = ["app", "preprocessing"]
-homepage = "https://github.com/davidpfister/app.f"
+keywords = ["resize", "reallocate"]
+homepage = "https://github.com/davidpfister/"
 
 
 [build]
@@ -16,8 +16,8 @@ include-dir = "include"
 
 [preprocess]
 cpp.suffixes = ["F90", "f90"]
-cpp.macros = ["_WIN32", "_FPM"]
+cpp.macros = ["_FPM"]
 
 [[test]]
-name       = "test_app"
+name       = "test_array"
 source-dir = "tests"
