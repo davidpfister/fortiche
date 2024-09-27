@@ -46,6 +46,10 @@ So before you start having fun with macros just ask yourself if it increases the
 |[export](./export)|Exports functions using DEC extension|
 |[logging](./logging)|Introduces _info_, _warn_, _debug_, _error_ and _fatal_. This exemple is an beyond simple logging library. The logging level is controlled with the environment variable _LOGGING_LEVEL_|
 |[logical](./logical)|Introduces short-circuiting logic to the language. In other words, in the block `if cond1() .and. cond2() then`, cond2() is not evaluated when cond1() returns false|
+|[loop](./loop)|Introduces the _foreach_ construct together with _only()_ and _exclude()_ filters|
+|[namelist](./namelist)|Introduces _serialize_ and _deserialize_ generic functions for derived type that can be written to namelists|
+|[optional](./optional)|Introduces _optionalize_ to deal with optional parameters and reduce slightly the verbosity|
+
 
 * [![fpm][fpm]][fpm-url]
 * [![ifort][ifort]][ifort-url]

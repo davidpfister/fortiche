@@ -19,3 +19,5 @@ foreach(x, array) only(mod(x, 2) == 0)
 endfor
 
 ```
+
+In this example, _x_ must not be defined. It will be used in a _associated_ block once expanded. So you are free to pick any name.
