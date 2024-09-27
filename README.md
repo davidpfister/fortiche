@@ -39,16 +39,16 @@ So before you start having fun with macros just ask yourself if it increases the
 
 |Folder|Description|
 |:-----|:----------|
-|[app](./app)|Introduces the _console_ keywords for build command line applications. It contains a simple argument parser and provides a fine control on the exit sequence. It also introduces the macros __COMPILER_NAME_ and __OS_NAME_|
-|[array](./array)|Introduces the keywords _reallocate_, _reallocate_with_, _reallocate_as_ and _resize_ for allocatable arrays.|
-|[assertion](./assertion)|'assertion' is a single-file, dependency-free, and simple micro framework for unit testing in fortran. The API is modeled after googletest|
-|[contract](./contract)|Introduces the concept of **multiple** inheritance into fortran. In addition, one can define a _contract_ (abstract types without components) only containing _clause_ (i.e. defered procedures)|
-|[export](./export)|Exports functions using DEC extension|
-|[logging](./logging)|Introduces _info_, _warn_, _debug_, _error_ and _fatal_. This exemple is an beyond simple logging library. The logging level is controlled with the environment variable _LOGGING_LEVEL_|
-|[logical](./logical)|Introduces short-circuiting logic to the language. In other words, in the block `if cond1() .and. cond2() then`, cond2() is not evaluated when cond1() returns false|
-|[loop](./loop)|Introduces the _foreach_ construct together with _only()_ and _exclude()_ filters|
-|[namelist](./namelist)|Introduces _serialize_ and _deserialize_ generic functions for derived type that can be written to namelists|
-|[optional](./optional)|Introduces _optionalize_ to deal with optional parameters and reduce slightly the verbosity|
+|[app](./src/app)|Introduces the _console_ keywords for build command line applications. It contains a simple argument parser and provides a fine control on the exit sequence. It also introduces the macros __COMPILER_NAME_ and __OS_NAME_|
+|[array](./src/array)|Introduces the keywords _reallocate_, _reallocate_with_, _reallocate_as_ and _resize_ for allocatable arrays.|
+|[assertion](./src/assertion)|'assertion' is a single-file, dependency-free, and simple micro framework for unit testing in fortran. The API is modeled after googletest|
+|[contract](./src/contract)|Introduces the concept of **multiple** inheritance into fortran. In addition, one can define a _contract_ (abstract types without components) only containing _clause_ (i.e. defered procedures)|
+|[export](./src/export)|Exports functions using DEC extension|
+|[logging](./src/logging)|Introduces _info_, _warn_, _debug_, _error_ and _fatal_. This exemple is an beyond simple logging library. The logging level is controlled with the environment variable _LOGGING_LEVEL_|
+|[logical](./src/logical)|Introduces short-circuiting logic to the language. In other words, in the block `if cond1() .and. cond2() then`, cond2() is not evaluated when cond1() returns false|
+|[loop](./src/loop)|Introduces the _foreach_ construct together with _only()_ and _exclude()_ filters|
+|[namelist](./src/namelist)|Introduces _serialize_ and _deserialize_ generic functions for derived type that can be written to namelists|
+|[optional](./src/optional)|Introduces _optionalize_ to deal with optional parameters and reduce slightly the verbosity|
 
 
 * [![fpm][fpm]][fpm-url]
