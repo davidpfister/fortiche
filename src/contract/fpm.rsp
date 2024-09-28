@@ -1,0 +1,17 @@
+@prettify
+options clean --all
+system fprettify tests\ -r --case 1 1 1 1 -i 4 --strict-indent --enable-replacements --strip-comments --c-relations
+
+@cpp
+options clean --all
+system gfortran -cpp -E tests/main.f90 -ffree-line-length-none > tests/main.out.f90
+
+@fpp
+options clean --all
+system fpp /macro_expand=cpp ./tests/main.f90 > tests/main.out.f90
+
+@clean
+options clean --all
+
+@test
+options test --flag '-ffree-line-length-none'
