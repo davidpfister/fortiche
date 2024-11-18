@@ -1,0 +1,19 @@
+@prettify
+system fprettify templates\ -r --case 1 1 1 1 -i 4 --strict-indent --enable-replacements --strip-comments --c-relations
+system fprettify src\ -r --case 1 1 1 1 -i 4 --strict-indent --enable-replacements --strip-comments --c-relations
+system fprettify tests\ -r --case 1 1 1 1 -i 4 --strict-indent --enable-replacements --strip-comments --c-relations
+options clean --all
+
+@cpp
+options clean --all
+system gfortran -cpp -E tests/main.f90 -ffree-line-length-none > tests/main.out.f90
+
+@t4
+options clean --all
+system t4 templates/list.tt -o src/list/intrinsic_list.f90
+
+@clean
+options clean --all
+
+@test
+options test --flag '-ffree-line-length-none'

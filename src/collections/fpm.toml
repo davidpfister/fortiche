@@ -1,0 +1,24 @@
+name = "generics"
+version = "1.0.0"
+maintainer = "davidpfister"
+author = "davidpfister"
+description = "Generics"
+categories = ["general"]
+keywords = ["generics"]
+homepage = "https://github.com/davidpfister/"
+
+
+[build]
+auto-tests = false
+
+[library]
+source-dir = "src"
+include-dir = "include"
+
+[preprocess]
+cpp.suffixes = ["F90", "f90"]
+cpp.macros = ["_FPM"]
+
+[[test]]
+name       = "test_generics"
+source-dir = "tests"

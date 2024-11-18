@@ -1,0 +1,9 @@
+{
+  "solution": {
+    "path": "..\\..\\Fortiche.sln",
+    "projects": [
+      "src\\collections\\tests\\Collections.Tests.vfproj",
+	  "src\\collections\\tests\\Collections.vfproj"
+    ]
+  }
+}
