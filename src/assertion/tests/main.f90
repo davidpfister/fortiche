@@ -132,6 +132,4 @@ TESTPROGRAM(main)
         ASSERT_DOUBLE_NE(d1, d3)
     END_TEST
 
-    pause
-    
 END_TESTPROGRAM
