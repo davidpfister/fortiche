@@ -25,30 +25,31 @@
 
 > _fortiche_ (adjective and noun) 
 > 
-> who is strong or smart
+> ` (informal) who is strong or smart `
 
-Fortiche is a collection of various preprocessor macros designed to extend the current features of the fortran standard. It contains various experiments that have been collected over the years. 
+Fortiche is a collection of various preprocessor macros designed to extend the current features of the Fortran standard. It contains various experiments that have been collected over the years. 
 
-This repo should be seen as an experimentation and was develop to test the limits of preprocessor macros. Fortran and preprocessing is kind of a love hate relationship. While preprocessing has never been standardized, you will find numerous projects that uses macros for various reasons going from reusability of the code, ersatz of generics, reduced verbosity of the code, etc. 
+This repo should be seen as an experimentation and was develop to test the limits of preprocessing. Fortran and preprocessing is a long-standing love-hate relationship. While preprocessing has never been standardized, one may find numerous projects that heavily rely on preprocessor macros and use them for various reasons going from code reusability, ersatz of generics, reduced verbosity, etc. 
 
 To cite Stroustrup’s book _The C++ Programming Language_
 
 > The first rule about macros is: Don’t use them unless you have to. Almost every macro demonstrates a flaw in the programming language, in the program, or in the programmer.
 
-So before you start having fun with macros just ask yourself if it increases the readability and the maintainability of the code.
+So before you start having fun with macros just ask yourself if it increases the readability and the maintainability of your code. If yes, let's play!
 
 |Folder|Description|
 |:-----|:----------|
-|[app](./src/app)|Introduces the _console_ keywords for build command line applications. It contains a simple argument parser and provides a fine control on the exit sequence. It also introduces the macros __COMPILER_NAME_ and __OS_NAME_|
-|[array](./src/array)|Introduces the keywords _reallocate_, _reallocate_with_, _reallocate_as_ and _resize_ for allocatable arrays.|
-|[assertion](./src/assertion)|'assertion' is a single-file, dependency-free, and simple micro framework for unit testing in fortran. The API is modeled after googletest|
-|[contract](./src/contract)|Introduces the concept of **multiple** inheritance into fortran. In addition, one can define a _contract_ (abstract types without components) only containing _clause_ (i.e. defered procedures)|
-|[export](./src/export)|Exports functions using DEC extension|
-|[logging](./src/logging)|Introduces _info_, _warn_, _debug_, _error_ and _fatal_. This exemple is an beyond simple logging library. The logging level is controlled with the environment variable _LOGGING_LEVEL_|
-|[logical](./src/logical)|Introduces short-circuiting logic to the language. In other words, in the block `if cond1() .and. cond2() then`, cond2() is not evaluated when cond1() returns false|
-|[loop](./src/loop)|Introduces the _foreach_ construct together with _only()_ and _exclude()_ filters|
-|[namelist](./src/namelist)|Introduces _serialize_ and _deserialize_ generic functions for derived type that can be written to namelists|
-|[optional](./src/optional)|Introduces _optionalize_ to deal with optional parameters and reduce slightly the verbosity|
+|[app](./src/app)|Introduces the `console` keyword to build command line applications. It contains a simple argument parser and provides a fine control on the exit sequence. It is much like the _C_ counterpart `int main(int argc, char *argv[])`. It also introduces the macros __COMPILER_NAME_ and __OS_NAME_|
+|[array](./src/array)|Introduces the keywords `reallocate`, `reallocate_with`, `reallocate_as` and `resize` for allocatable arrays.|
+|[assertion](./src/assertion)|`assertion.inc` is a single-file, dependency-free, and simple micro-framework for unit testing in Fortran. The API is modeled after the one of googletest|
+|[collections](./src/collections)|Introduces `list` (aka dynamic arrays) to the language with new procedure to manipulate them as `add`, `get`, `insert`, `clear`, `remove`, and `sizeof`|
+|[contract](./src/contract)|Introduces the concept of <ins>multiple</ins> inheritance into Fortran. In addition, one can define a `contract` (aka abstract types without components) only containing `clause` (aka deferred procedures)|
+|[export](./src/export)|Exports functions using !DEC extension|
+|[logging](./src/logging)|Introduces `info`, `warn`, `debug`, `error` and `fatal` to the Fortran language. This example is a very simple logging library. The logging level is controlled with the environment variable _LOGGING_LEVEL_|
+|[logical](./src/logical)|Introduces short-circuiting logic to the language. In other words, in the block `if cond1() andalso cond2() then`, cond2() is not evaluated when cond1() returns .false.|
+|[loop](./src/loop)|Introduces the `foreach` construct together with `only(x)` and `exclude(x)` filters|
+|[namelist](./src/namelist)|Introduces `serialize` and `deserialize` macros for derived types that can be written to namelists (i.e. without allocatable components and pointers)|
+|[optional](./src/optional)|Introduces `optionalize` to deal with optional parameters and reduce slightly the verbosity|
 
 
 * [![fpm][fpm]][fpm-url]

@@ -1,6 +1,6 @@
 # Optional
 
-Introduces _optionalize_ to deal with optional parameters. This one could somehow be obtained with a classical function (cf. optval in stdlib) but it requires writing the same function for any possible type. 
+Introduces `optionalize` to deal with optional parameters. This one could somehow be obtained with a classical function (see [optval](https://github.com/fortran-lang/stdlib/blob/master/src/stdlib_optval.fypp) in stdlib) but it requires writing the same function for any possible type. 
 
 ```fortran
 function test(option) result(res)

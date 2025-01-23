@@ -1,6 +1,6 @@
 # Contract
 
-Introduces the concept of **multiple** inheritance into fortran. In addition, one can define a _contract_ (abstract types without components) only containing _clause_ (i.e. defered procedures)
+Introduces the concept of <ins>multiple</ins> inheritance into Fortran. In addition, one can define a _contract_ (aka abstract types without components) only containing _clause_ (aka deferred procedures)
 
 ```fortran
 contract(type1)

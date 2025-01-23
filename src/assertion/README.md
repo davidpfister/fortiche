@@ -1,9 +1,9 @@
 # Assertion
-'assertion' is a single-file, dependency-free, and simple micro framework for unit testing in fortran.
+`assertion.inc` is a single-file, dependency-free, and simple micro-framework for unit testing in Fortran.
 
 ## Getting Started
 We recommend starting from the test cases present in this repository. 
-They normally are good starting material to get familiar with the library.
+They are good starting material to get familiar with the library.
 
 ```fortran
 #include "../include/assertion.inc"
@@ -38,12 +38,12 @@ The output would look like this
 
 ## Features
 - Simple, single-file, dependency-free micro test framework
-Adding the assertion into your test project is easy as pie. Simply include the file assertion.inc into your code. This can either be done by specifying the relative path to the file (e.g. `#include "../include/assertion.inc"`) or in the toml file by adding the folder in which the file assertion.inc stands, directly under `[library]`, i.e.`include-dir = "include"`
+Adding the assertion into your test project is easy as pie. Simply include the file `assertion.inc` into your code. This can either be done by specifying the relative path to the file (e.g. `#include "../include/assertion.inc"`) or in the toml file by adding the folder in which the file assertion.inc stands, directly under `[library]`, i.e.`include-dir = "include"`
 - Color output
 - Modeled after the assertions available in GoogleTest \
 It should contain enough assertions to get you started. More assertion can easily be added.
 - Fatal and non fatal failures\
-You can specify whether a test failure should be treated as fatal or non-fatal with Googletest, allowing tests to continue running even if a failure occurs
+You can specify whether a test failure should be treated as fatal or non-fatal, allowing tests to continue running even if a failure occurs.
 
 ### Assertions
 |Method|Details|
@@ -76,7 +76,7 @@ ASSERT/EXPECT_SAME is an attempt to create a generic equality comparer that shou
 
 ## Developers Corner
 The library heavily relies on pre-processing (using cpp or fpp). 
-In order to simplify the development of the single file include/assertion.inc we recommend to map the extension '.inc' with fortran highlighting settings in vscode. 
+In order to simplify the development of the single file `assertion.inc` we recommend to map the extension '.inc' with Fortran highlighting settings in VSCode. 
 To do so, 
 
 > `Ctrl`+`Shift`+`P` \
@@ -89,7 +89,8 @@ cpp
 ```
 cpp -E main.f90 -I../include > main.fpp
 ```
-fpp 
+
+or with fpp 
 ```
 fpp -I../include main.f90 > main.fpp
 ```

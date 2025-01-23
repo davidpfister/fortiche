@@ -1,8 +1,8 @@
 # App
 
-Introduces the _console_ keywords for build command line applications. 
+Introduces the `console` keyword to easily build command-line-applications. 
 
-The _console_ replaces the _program_ keywords. The following function must be the subroutine _main_ and take as arguments the command line arguments. 
+The `console` replaces the `program` keyword. The following function <ins>must</ins> be the subroutine `main` and takes as argument an array of string corresponding to the command line arguments. It is much like the _C_ counterpart `int main(int argc, char *argv[])`
 
 It contains a simple argument parser and also provides a fine control on the exit sequence by registering a callback function that is invoked before leaving.
 

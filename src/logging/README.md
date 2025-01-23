@@ -1,11 +1,11 @@
 # Logging
 
 This example is an beyond simple logging library. 
-Introduces _info_, _warn_, _debug_, _error_ and _fatal_. 
+Introduces `info`, `warn`, `debug`, `error` and `fatal`. 
 
-The logging level is controlled with the environment variable _LOGGING_LEVEL_
+The logging level is controlled with the environment variable `_LOGGING_LEVEL_`
 
-Logging levels go from 1 (info) to 5 (FATAL)
+Logging levels go from 1 (info) to 5 (fatal)
 
 ```
 export LOGGING_LEVEL=2
