@@ -281,8 +281,12 @@ deallocate(args); allocate(args(0));\
 call startup(args); \
 end if;\
 contains 
-#define main(args) startup(args); \
-type(application) :: app
+#define main(args) subroutine startup(args); \
+type(string), intent(in) :: args(:); \
+type(application) :: app; \
+block
+#define endmain end block; \
+end subroutine
 #define cast(var, T) \
 select type (var) ;\
 type is (T)

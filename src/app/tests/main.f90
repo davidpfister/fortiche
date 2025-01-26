@@ -2,8 +2,7 @@
 #include "../include/os.inc"
 #include "../include/compiler.inc"  
 console(test)
-    subroutine main(args)
-        type(string), intent(in) :: args(:)
+    main(args)
         integer :: i, nargs
         
         print*, app%location()
@@ -19,7 +18,7 @@ console(test)
 
         print*, _COMPILER_NAME
         print*, _OS_NAME
-    end subroutine
+    endmain
             
     subroutine callme(context)
         class(*), intent(inout) :: context
