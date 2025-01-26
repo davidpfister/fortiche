@@ -9,12 +9,11 @@ It contains a simple argument parser and also provides a fine control on the exi
 ```fortran
 
 console(test)
-    subroutine main(args)
-        type(string), intent(in) :: args(:)
+    main(args)
         !...
         call app%onexit(app, foo)
 
-    end subroutine
+    endmain
             
     subroutine foo(context)
         class(*), intent(inout) :: context
