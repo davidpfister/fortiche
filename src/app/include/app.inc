@@ -26,33 +26,33 @@
 ! (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 ! OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 module applibrary
-	implicit none; private
+    implicit none; private
 
-	public :: split_commandline_into_args
+    public :: split_commandline_into_args
 
-	interface
-		subroutine exit_x(context)
-			class(*), intent(inout) :: context
-		end subroutine
-	end interface
+    interface
+        subroutine exit_x(context)
+            class(*), intent(inout) :: context
+        end subroutine
+    end interface
 
-	type, public :: string
+    type, public :: string
         private
         character(:), allocatable, public :: chars
     end type
     
     type, public :: application
         private
-		character(:), allocatable, private :: username_
-		character(:), allocatable, private :: location_
-		class(*), pointer, private :: context_ => null()
-		procedure(exit_x), nopass, pointer, private :: onexit_ => null()
+        character(:), allocatable, private :: username_
+        character(:), allocatable, private :: location_
+        class(*), pointer, private :: context_ => null()
+        procedure(exit_x), nopass, pointer, private :: onexit_ => null()
         contains
-		procedure, pass(this), public :: username => app_username
-		procedure, pass(this), public :: location => app_location
-		procedure, pass(this), public :: abort => app_abort
-		procedure, pass(this), public :: shutdown => app_shutdown
-		procedure, pass(this), public :: onexit => app_onexit
+        procedure, pass(this), public :: username => app_username
+        procedure, pass(this), public :: location => app_location
+        procedure, pass(this), public :: abort => app_abort
+        procedure, pass(this), public :: shutdown => app_shutdown
+        procedure, pass(this), public :: onexit => app_onexit
         final :: app_finalize
     end type
 
@@ -65,72 +65,72 @@ module applibrary
 
     contains
 
-	function app_username(this) result(username)
-		class(application), intent(inout) :: this
-		!private
-		character(:), allocatable :: username
+    function app_username(this) result(username)
+        class(application), intent(inout) :: this
+        !private
+        character(:), allocatable :: username
 
-		if (.not. allocated(this%username_)) then
-			this%username_ = get_username()
-		end if
-		username = this%username_
-	end function
+        if (.not. allocated(this%username_)) then
+            this%username_ = get_username()
+        end if
+        username = this%username_
+    end function
 
-	function app_location(this) result(location)
-		class(application), intent(inout) :: this
-		!private
-		character(:), allocatable :: location
-		integer :: n
+    function app_location(this) result(location)
+        class(application), intent(inout) :: this
+        !private
+        character(:), allocatable :: location
+        integer :: n
 
-		if (.not. allocated(this%location_)) then
-			call get_command_argument(0,length=n)
-			allocate(character(n) :: this%location_)
-			call get_command_argument(0,value=this%location_)
-		end if
-		location = this%location_
-	end function
+        if (.not. allocated(this%location_)) then
+            call get_command_argument(0,length=n)
+            allocate(character(n) :: this%location_)
+            call get_command_argument(0,value=this%location_)
+        end if
+        location = this%location_
+    end function
 
-	subroutine app_abort(this)
-		class(application), intent(inout) :: this
-		interface
-			subroutine abort() bind(C, name="abort")
-			end subroutine
-		end interface
+    subroutine app_abort(this)
+        class(application), intent(inout) :: this
+        interface
+            subroutine abort() bind(C, name="abort")
+            end subroutine
+        end interface
 
-		call app_finalize(this)
-		call abort()
-	end subroutine
+        call app_finalize(this)
+        call abort()
+    end subroutine
 
-	subroutine app_shutdown(this, code)
+    subroutine app_shutdown(this, code)
         class(application), intent(inout) :: this
         integer, intent(in), optional :: code
 
-		call app_finalize(this)
+        call app_finalize(this)
 
-		if (present(code)) then
-			error stop code
+        if (present(code)) then
+            error stop code
         else
-			stop 0
-		end if
+            stop 0
+        end if
     end subroutine
 
-	subroutine app_onexit(this, context, event)
+    subroutine app_onexit(this, context, event)
         class(application), intent(inout) :: this
         class(*), intent(in), target :: context
-		procedure(exit_x) :: event
+        procedure(exit_x) :: event
 
-		nullify(this%context_); this%context_ => context
-		nullify(this%onexit_); this%onexit_ => event
+        nullify(this%context_); this%context_ => context
+        nullify(this%onexit_); this%onexit_ => event
     end subroutine
     
     subroutine app_finalize(this)
         type(application), intent(inout) :: this
         
         if (associated(this%onexit_)) then 
-			call this%onexit_(this%context_)
-			nullify(this%context_)
-			nullify(this%onexit_)
-		end if
+            call this%onexit_(this%context_)
+            nullify(this%context_)
+            nullify(this%onexit_)
+        end if
     end subroutine
 
     function split_commandline_into_args0() result(args)
@@ -177,7 +177,7 @@ module applibrary
         type(string), allocatable   :: args(:)
         character(:), allocatable :: builder
         integer :: i, j, k, n, quoteCount, slashCount
-		character(1) :: current
+        character(1) :: current
         character(1), parameter :: SPACE = char(32)
         character(1), parameter :: BACKSLASH = char(92)
         character(1), parameter :: QUOTE = char(34)
@@ -194,7 +194,7 @@ module applibrary
                 i = i + 1; if (i > n) exit
             end do
 
-            if (i >= n) exit
+            if (i > n) exit
             if (commandline(i:i) == HASH .and. removeHashComments) exit
 
             quoteCount = 0
@@ -253,14 +253,14 @@ module applibrary
         end do
     end function
 
-	function get_username() result(username)
+    function get_username() result(username)
         character(255) :: tmp
         character(:), allocatable :: username
         integer :: sts
 #ifdef _WIN32
         call get_environment_variable(name="USERNAME", value=tmp, status=sts)
 #else
-	    call get_environment_variable(name="USER", value=tmp, status=sts)
+        call get_environment_variable(name="USER", value=tmp, status=sts)
 #endif
         if (sts == 0) then
             username = trim(tmp)
