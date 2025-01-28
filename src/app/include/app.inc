@@ -169,6 +169,33 @@ module applibrary
         args = split_commandline_into_args3(commandline, .true., dummy)
     end function
 
+    !> @brief The following command line parsing algorithm is similar to the one
+    !! used by Microsoft. The rules used by Microsoft C/C++ code are 
+    !! Microsoft-specific. The runtime startup code uses these rules when 
+    !! interpreting arguments given on the operating system command line:
+    !!  - Arguments are delimited by white space, which is either a space or a tab.
+    !!  - The first argument (args[0]) is treated specially. It represents the program name. 
+    !!    Because it must be a valid pathname, parts surrounded by double quote marks (") 
+    !!    are allowed. The double quote marks aren't included in the args[0] output. 
+    !!    The parts surrounded by double quote marks prevent interpretation of a space or 
+    !!    tab character as the end of the argument. The later rules in this list don't apply.
+    !!  - A string surrounded by double quote marks is interpreted as a single argument, 
+    !!    which may contain white-space characters. A quoted string can be embedded in 
+    !!    an argument. The caret (^) isn't recognized as an escape character or delimiter. 
+    !!    Within a quoted string, a pair of double quote marks is interpreted as a single 
+    !!    escaped double quote mark. If the command line ends before a closing double quote 
+    !!    mark is found, then all the characters read so far are output as the last argument.
+    !!  - A double quote mark preceded by a backslash (\") is interpreted as a literal 
+    !!    double quote mark (").
+    !!  - Backslashes are interpreted literally, unless they immediately precede a double quote mark.
+    !!  - If an even number of backslashes is followed by a double quote mark, then one backslash (\) 
+    !!    is placed in the argv array for every pair of backslashes (\\), and the double quote mark 
+    !!    (") is interpreted as a string delimiter.
+    !!  - If an odd number of backslashes is followed by a double quote mark, then one backslash (\) 
+    !!    is placed in the argv array for every pair of backslashes (\\). The double quote mark is 
+    !!    interpreted as an escape sequence by the remaining backslash, causing a literal double 
+    !!    quote mark (") to be placed in argv.
+    !! @note The original code (in C#) can be found here: https://github.com/dotnet/roslyn/blob/46c8f4f56765e16b92759de8098494b36cfb84f5/src/Compilers/Core/Portable/InternalUtilities/CommandLineUtilities.cs
     function split_commandline_into_args3(commandline, removeHashComments, illegalChar) result(args)
         character(*), intent(in)                :: commandline
         logical, intent(in)                     :: removeHashComments
