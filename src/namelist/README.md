@@ -1,6 +1,6 @@
 # Namelist
 
-Introduces _serialize_ and _deserialize_ generic functions for derived type that can be written to namelists
+Introduces `serialize` and `deserialize` generic functions for derived type that can be written to namelists
 
 > This, of course come with the limitation of the namelist i/o, i.e. that the derived type must not contain allocatable components or pointers. 
 
