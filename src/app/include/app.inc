@@ -30,6 +30,9 @@ module applibrary
 
     public :: split_commandline_into_args
 
+    public :: trim, &
+              index
+
     interface
         subroutine exit_x(context)
             class(*), intent(inout) :: context
@@ -39,14 +42,23 @@ module applibrary
     type, public :: string
         private
         character(:), allocatable, public :: chars
+    contains
+        procedure, private, pass(lhs) :: string_assign_string
+        procedure, private, pass(lhs) :: string_assign_character
+        generic :: assignment(=)      => string_assign_string,    &  
+                                         string_assign_character
+        procedure, private, pass(dtv) :: string_read_formatted
+        procedure, private, pass(dtv) :: string_write_formatted
+        generic :: read (formatted)   => string_read_formatted
+        generic :: write (formatted)  => string_write_formatted
     end type
     
     type, public :: application
         private
-        character(:), allocatable, private :: username_
-        character(:), allocatable, private :: location_
-        class(*), pointer, private :: context_ => null()
-        procedure(exit_x), nopass, pointer, private :: onexit_ => null()
+        character(:), allocatable           :: username_
+        character(:), allocatable           :: location_
+        class(*), pointer                   :: context_ => null()
+        procedure(exit_x), nopass, pointer  :: onexit_ => null()
         contains
         procedure, pass(this), public :: username => app_username
         procedure, pass(this), public :: location => app_location
@@ -61,6 +73,14 @@ module applibrary
         module procedure split_commandline_into_args1
         module procedure split_commandline_into_args2
         module procedure split_commandline_into_args3
+    end interface
+
+    interface trim
+        module procedure :: string_trim
+    end interface
+    
+    interface index
+        module procedure :: string_index
     end interface
 
     contains
@@ -293,6 +313,67 @@ module applibrary
             username = trim(tmp)
         end if
     end function
+
+    pure subroutine string_assign_string(lhs, rhs)
+        class(string), intent(inout) :: lhs
+        type(string),  intent(in)    :: rhs
+
+        if (allocated(rhs%chars)) lhs%chars = rhs%chars
+    end subroutine
+
+    pure subroutine string_assign_character(lhs, rhs)
+        class(string), intent(inout) :: lhs
+        character(*), intent(in)     :: rhs
+
+        lhs%chars = rhs
+    end subroutine
+    
+    function string_trim(str) result(res)
+        class(string), intent(in) :: str
+        character(:), allocatable :: res
+        
+        res = trim(str%chars)
+    end function
+    
+    integer function string_index(str, substr, back) result(res)
+        type(string), intent(in) :: str
+        character(*), intent(in) :: substr
+        logical, optional, intent(in) :: back
+        
+        res = index(str%chars, substr, back)
+    end function
+    
+    subroutine string_write_formatted(dtv, unit, iotype, v_list, iostat, iomsg)
+        class(string), intent(in)   :: dtv !< The string.
+        integer, intent(in)         :: unit !< Logical unit.
+        character(*), intent(in)    :: iotype !< Edit descriptor.
+        integer, intent(in)         :: v_list(:) !< Edit descriptor list.
+        integer, intent(out)        :: iostat !< IO status code.
+        character(*), intent(inout) :: iomsg !< IO status message.
+
+        if (allocated(dtv%chars)) then
+            write (unit, '(A)', iostat=iostat, iomsg=iomsg) dtv%chars
+        else
+            write (unit, '(A)', iostat=iostat, iomsg=iomsg) ''
+        end if
+    end subroutine
+    
+    subroutine string_read_formatted(dtv, unit, iotype, v_list, iostat, iomsg)
+        class(string), intent(inout)    :: dtv !< The string.
+        integer, intent(in)             :: unit !< Logical unit.
+        character(*), intent(in)        :: iotype !< Edit descriptor.
+        integer, intent(in)             :: v_list(:) !< Edit descriptor list.
+        integer, intent(out)            :: iostat !< IO status code.
+        character(*), intent(inout)     :: iomsg !< IO status message.
+        !private
+        character(:), allocatable :: buffer
+        integer :: n
+
+        inquire(unit, size=n)
+        allocate(character(len=n) :: buffer)
+        read (unit, '(A)', iostat=iostat, iomsg=iomsg) buffer
+        dtv%chars = buffer
+    end subroutine
 end module
 
 #define console(name) \
