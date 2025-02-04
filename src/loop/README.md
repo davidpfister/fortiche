@@ -1,6 +1,6 @@
 # Loop
 
-Introduces the _foreach_ construct together with _only()_ and _exclude()_ filters
+Introduces the `foreach` construct together with `only(x)` and `exclude(x)` filters
 
 ```fortran
 
