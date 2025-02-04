@@ -49,8 +49,12 @@ module applibrary
                                          string_assign_character
         procedure, private, pass(dtv) :: string_read_formatted
         procedure, private, pass(dtv) :: string_write_formatted
+        procedure, private, pass(dtv) :: string_read_unformatted !! Unformatted input.
+        procedure, private, pass(dtv) :: string_write_unformatted
         generic :: read (formatted)   => string_read_formatted
         generic :: write (formatted)  => string_write_formatted
+        generic :: read (unformatted) => string_read_unformatted
+        generic :: write (unformatted)=> string_write_unformatted
     end type
     
     type, public :: application
@@ -374,6 +378,34 @@ module applibrary
         read (unit, '(A)', iostat=iostat, iomsg=iomsg) buffer
         dtv%chars = buffer
     end subroutine
+
+    subroutine string_read_unformatted(dtv, unit, iostat, iomsg)
+        class(string), intent(inout)    :: dtv !< The string.
+        integer, intent(in)             :: unit !< Logical unit.
+        integer, intent(out)            :: iostat !< IO status code.
+        character(*), intent(inout)     :: iomsg !< IO status message.
+        !private
+        character(:), allocatable :: buffer
+        integer :: n
+
+        inquire(unit, size=n)
+        allocate(character(len=n) :: buffer)
+        read (unit, iostat=iostat, iomsg=iomsg) buffer
+        dtv%chars = buffer
+      end subroutine
+  
+      subroutine string_write_unformatted(dtv, unit, iostat, iomsg)
+          class(string), intent(in)     :: dtv !! The string.
+          integer, intent(in)           :: unit !! Logical unit.
+          integer, intent(out)          :: iostat !! IO status code.
+          character(*), intent(inout)   :: iomsg !! IO status message.
+  
+          if (allocated(dtv%chars)) then
+              write (unit, iostat=iostat, iomsg=iomsg) dtv%chars
+          else
+              write (unit, iostat=iostat, iomsg=iomsg) ''
+          end if
+      end subroutine
 end module
 
 #define console(name) \
