@@ -16,6 +16,8 @@ console(test)
             print *, args(i)%chars
         end do
 
+        call test_clp()
+
         print*, _COMPILER_NAME
         print*, _OS_NAME
     endmain
@@ -26,5 +28,27 @@ console(test)
         cast(context, application)
             print*, 'Exiting app from ' // context%username()
         endcast
+    end subroutine
+
+    subroutine test_clp()
+        character(:), allocatable :: cl
+        type(string), allocatable :: args(:)
+        integer :: i
+
+        cl = '"abc" d e'
+        args = split_commandline_into_args(cl)
+
+        cl = 'a\\b d"e f"g h'
+        args = split_commandline_into_args(cl)
+
+        cl = 'a\\\"b c d'
+        args = split_commandline_into_args(cl)
+
+        cl = 'a\\\\"b c" d e'
+        args = split_commandline_into_args(cl)
+
+        cl = 'a"b"" c d'
+        args = split_commandline_into_args(cl)
+
     end subroutine
 end
