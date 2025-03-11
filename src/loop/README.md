@@ -20,4 +20,4 @@ endfor
 
 ```
 
-In this example, _x_ must not be defined. It will be used in a _associated_ block once expanded. So you are free to pick any name.
+In this example, _x_ must not be defined. It will be used in a _associated_ construct once expanded. So you are free to pick any name.

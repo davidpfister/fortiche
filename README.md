@@ -64,8 +64,8 @@ So before you start having fun with macros just ask yourself if it increases the
 To build that library you need
 
 - a Fortran 2008 compliant compiler, or better, a Fortran 2018 compliant compiler.
+The following compilers are tested on the default branch of **fortiche**:
 
-The following compilers are tested on the default branch of *fortiche*:
 <center>
 
 | Name |	Version	| Platform	| Architecture |
@@ -74,7 +74,8 @@ The following compilers are tested on the default branch of *fortiche*:
 | Intel oneAPI classic	| 2021.5	| Windows 10 |	x86_64 |
 
 </center>
-- a preprocessor. *fortiche* uses quite some preprocessor macros. It is known to work both with intel `fpp` an gcc `cpp`.  
+
+- a preprocessor. **fortiche** uses quite some preprocessor macros. It is known to work both with intel `fpp` an gcc `cpp`.  
 
 ### Installation
 
@@ -88,7 +89,7 @@ cd fortiche
 
 Each subfolder contains a fpm projects. It can be build using *fpm*
 For convenience, the  folder also contains a response file that can be invoked as follows: 
-```
+```bash
 fpm @test
 ```
 
