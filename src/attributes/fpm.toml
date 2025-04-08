@@ -1,0 +1,23 @@
+name = "optional"
+version = "1.0.0"
+maintainer = "davidpfister"
+author = "davidpfister"
+description = "Optionalize macro"
+categories = ["general"]
+keywords = ["optional"]
+homepage = "https://github.com/davidpfister/"
+
+
+[build]
+auto-tests = false
+
+[library]
+include-dir = "include"
+
+[preprocess]
+cpp.suffixes = ["F90", "f90"]
+cpp.macros = ["_FPM"]
+
+[[test]]
+name       = "test_optional"
+source-dir = "tests"
