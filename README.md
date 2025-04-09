@@ -23,7 +23,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About the Project
 <p align="center">
-  <img src="https://github.com/davidpfister/fortiche/blob/master/icon.jpeg?raw=true">
+  <img src="https://github.com/davidpfister/fortiche/blob/master/icon.jpeg?raw=true" width="512" height="512">
 </p>
 > _fortiche_ (adjective and noun) 
 > 
