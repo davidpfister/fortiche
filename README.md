@@ -44,6 +44,7 @@ So before you start having fun with macros just ask yourself if it increases the
 |[app](./src/app)|Introduces the `console` keyword to build command line applications. It contains a simple argument parser and provides a fine control on the exit sequence. It is much like the _C_ counterpart `int main(int argc, char *argv[])`. It also introduces the macros __COMPILER_NAME_ and __OS_NAME_|
 |[array](./src/array)|Introduces the keywords `reallocate`, `reallocate_with`, `reallocate_as` and `resize` for allocatable arrays.|
 |[assertion](./src/assertion)|`assertion.inc` is a single-file, dependency-free, and simple micro-framework for unit testing in Fortran. The API is modeled after the one of googletest|
+|[attributes](./src/attributes)|Introduces the attribute `obsolete` to flag deprecated subroutines/functions|
 |[collections](./src/collections)|Introduces `list` (aka dynamic arrays) to the language with new procedure to manipulate them as `add`, `get`, `insert`, `clear`, `remove`, and `sizeof`|
 |[contract](./src/contract)|Introduces the concept of <ins>multiple</ins> inheritance into Fortran. In addition, one can define a `contract` (aka abstract types without components) only containing `clause` (aka deferred procedures)|
 |[export](./src/export)|Exports functions using !DEC extension|
