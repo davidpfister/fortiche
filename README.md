@@ -22,7 +22,9 @@
 # Introduction
 <!-- ABOUT THE PROJECT -->
 ## About the Project
-
+<p align="center">
+  <img src="https://github.com/davidpfister/fortiche/blob/master/icon.jpeg?raw=true">
+</p>
 > _fortiche_ (adjective and noun) 
 > 
 > ` (informal) who is strong or smart `
