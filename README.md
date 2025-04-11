@@ -25,6 +25,7 @@
 <p align="center">
   <img src="https://github.com/davidpfister/fortiche/blob/master/icon.jpeg?raw=true" width="512" height="512">
 </p>
+
 > _fortiche_ (adjective and noun) 
 > 
 > ` (informal) who is strong or smart `
@@ -53,7 +54,7 @@ So before you start having fun with macros just ask yourself if it increases the
 |[loop](./src/loop)|Introduces the `foreach` construct together with `only(x)` and `exclude(x)` filters|
 |[namelist](./src/namelist)|Introduces `serialize` and `deserialize` macros for derived types that can be written to namelists (i.e. without allocatable components and pointers)|
 |[optional](./src/optional)|Introduces `optionalize` to deal with optional parameters and reduce slightly the verbosity|
-|[string](./src/string)|Introduces string interpolation|
+|[string](./src/string)|Introduces string interpolation and write `s = strf('Hello {x}!',(x))`|
 
 
 * [![fpm][fpm]][fpm-url]
