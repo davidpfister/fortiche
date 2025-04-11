@@ -59,8 +59,8 @@ module string_writable
         type(string_arg), intent(in)    :: values(:)
         character(:), allocatable :: res
         !private
-        character(:), allocatable :: cnames
-        integer :: i, j, n, istart, istop
+        character(:), allocatable :: cnames, vname
+        integer :: i, j, k, n, istart, istop
         integer, allocatable :: pos(:)
         type(string_arg), allocatable :: args(:)
         logical :: found
@@ -112,13 +112,32 @@ module string_writable
             else if (str(i:i) == '}') then
                 istop = i
                 found = .false.
-                do j = 1, n
-                    if (args(j)%key == str(istart+1:istop-1)) then
-                        res = res // stringify(args(j)%value)
+                k = index(str(istart+1:istop-1), ':')
+                vname = str(istart+1: merge(k+istart-1, istop-1, k > 1))
+                
+                if (verify(vname, '0123456789') == 0) then
+                    read(vname, *) j
+                    if (j > 0 .and. j <= n) then
+                        if (k > 0) then
+                            res = res // stringify(args(j)%value, fmt=str(istart+k+1:istop-1))
+                        else
+                            res = res // stringify(args(j)%value)
+                        end if
                         found = .true.
-                        exit
                     end if
-                end do
+                else
+                    do j = 1, n
+                        if (args(j)%key == vname) then
+                            if (k > 0) then
+                                res = res // stringify(args(j)%value, fmt=str(istart+k+1:istop-1))
+                            else
+                                res = res // stringify(args(j)%value)
+                            end if
+                            found = .true.
+                            exit
+                        end if
+                    end do
+                end if
                 if (.not. found) then
                     res = res // str(istart:istop)
                 end if
@@ -135,29 +154,84 @@ module string_writable
         
         contains
 
-        function stringify(x) result(s)
-            class(*), intent(in)        :: x
-            character(:), allocatable   :: s
+        function stringify(x, fmt) result(s)
+            class(*), intent(in)                :: x
+            character(*), optional, intent(in)  :: fmt
+            character(:), allocatable           :: s
             
             allocate(character(4096) :: s)
 
             select type(x)
-            type is (integer(int8));     write(s,'(i0)') x
-            type is (integer(int16));    write(s,'(i0)') x
-            type is (integer(int32));    write(s,'(i0)') x
-            type is (integer(int64));    write(s,'(i0)') x
-            type is (real(real32));      write(s,'(1pg0)') x
-            type is (real(real64));      write(s,'(1pg0)') x
+            type is (integer(int8))
+                if (present(fmt)) then
+                    write(s,'('//fmt//')') x
+                else
+                    write(s,'(i0)') x
+                end if
+            type is (integer(int16))
+                if (present(fmt)) then
+                    write(s,'('//fmt//')') x
+                else
+                    write(s,'(i0)') x
+                end if
+            type is (integer(int32))
+                if (present(fmt)) then
+                    write(s,'('//fmt//')') x
+                else
+                    write(s,'(i0)') x
+                end if
+            type is (integer(int64))
+                if (present(fmt)) then
+                    write(s,'('//fmt//')') x
+                else
+                    write(s,'(i0)') x
+                end if
+            type is (real(real32))
+                if (present(fmt)) then
+                    write(s,'('//fmt//')') x
+                else
+                    write(s,'(1pg0)') x
+                end if
+            type is (real(real64))
+                if (present(fmt)) then
+                    write(s,'('//fmt//')') x
+                else
+                    write(s,'(1pg0)') x
+                end if
 #ifdef HAS_REAL128
-            type is (real(real128));     write(s,'(1pg0)') x
+            type is (real(real128))
+                if (present(fmt)) then
+                    write(s,'('//fmt//')') x
+                else
+                    write(s,'(1pg0)') x
+                end if
 #endif
-            type is (logical);           write(s,'(l1)') x
-            type is (character(*));      write(s,'(a)') trim(x)
+            type is (logical)
+                if (present(fmt)) then
+                    write(s,'('//fmt//')') x
+                else
+                    write(s,'(l1)') x
+                end if
+            type is (character(*))
+                if (present(fmt)) then
+                    write(s,'('//fmt//')') trim(x)
+                else
+                    write(s,'(a)') trim(x)
+                end if
             type is (complex);           write(s,'("(",1pg0,",",1pg0,")")') x
+                if (present(fmt)) then
+                    write(s,'('//fmt//')') x
+                else
+                    write(s,'("(",1pg0,",",1pg0,")")') x
+                end if
             class is (writable)
-                write(s,*) x
+                if (present(fmt)) then
+                    write(s,'('//fmt//')') x
+                else
+                    write(s,'(dt)') x
+                end if
             end select
-            s = trim(s)
+            s = trim(adjustl(s))
         end function
     end function
     
