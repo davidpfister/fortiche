@@ -5,7 +5,7 @@ author = "davidpfister"
 description = "Generics"
 categories = ["general"]
 keywords = ["generics"]
-homepage = "https://github.com/davidpfister/"
+homepage = "https://github.com/davidpfister/fortiche"
 
 
 [build]

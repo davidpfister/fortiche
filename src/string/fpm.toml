@@ -1,10 +1,10 @@
-name = "logical"
+name = "string"
 version = "1.0.0"
 maintainer = "davidpfister"
 author = "davidpfister"
-description = "Add simple short-circuit mechanism to 'if' block"
+description = "Optionalize macro"
 categories = ["general"]
-keywords = ["if", "short-circuit"]
+keywords = ["string"]
 homepage = "https://github.com/davidpfister/fortiche"
 
 
@@ -19,5 +19,5 @@ cpp.suffixes = ["F90", "f90"]
 cpp.macros = ["_FPM"]
 
 [[test]]
-name       = "test_logical"
+name       = "test_string"
 source-dir = "tests"

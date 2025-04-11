@@ -53,6 +53,7 @@ So before you start having fun with macros just ask yourself if it increases the
 |[loop](./src/loop)|Introduces the `foreach` construct together with `only(x)` and `exclude(x)` filters|
 |[namelist](./src/namelist)|Introduces `serialize` and `deserialize` macros for derived types that can be written to namelists (i.e. without allocatable components and pointers)|
 |[optional](./src/optional)|Introduces `optionalize` to deal with optional parameters and reduce slightly the verbosity|
+|[string](./src/string)|Introduces string interpolation|
 
 
 * [![fpm][fpm]][fpm-url]

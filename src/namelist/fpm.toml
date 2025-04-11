@@ -5,7 +5,7 @@ author = "davidpfister"
 description = "Namelist serialization and deserialization"
 categories = ["general"]
 keywords = ["namelist", "serialization", "deserialization"]
-homepage = "https://github.com/davidpfister/"
+homepage = "https://github.com/davidpfister/fortiche"
 
 
 [build]

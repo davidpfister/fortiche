@@ -5,7 +5,7 @@ author = "davidpfister"
 description = "Application framework using preprocessing"
 categories = ["general"]
 keywords = ["app", "preprocessing"]
-homepage = "https://github.com/davidpfister/app.f"
+homepage = "https://github.com/davidpfister/fortiche"
 
 
 [build]

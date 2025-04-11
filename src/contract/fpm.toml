@@ -5,7 +5,7 @@ author = "davidpfister"
 description = "Implements contract based inheritance and multiple inheritance"
 categories = ["general"]
 keywords = ["oop", "inheritance"]
-homepage = "https://github.com/davidpfister/"
+homepage = "https://github.com/davidpfister/fortiche"
 
 
 [build]

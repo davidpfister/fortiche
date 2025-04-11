@@ -5,7 +5,7 @@ author = "davidpfister"
 description = "Add reallocate and risize to fortran keywords"
 categories = ["general"]
 keywords = ["resize", "reallocate"]
-homepage = "https://github.com/davidpfister/"
+homepage = "https://github.com/davidpfister/fortiche"
 
 
 [build]
