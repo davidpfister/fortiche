@@ -3,7 +3,7 @@
 This is an attempt to create dynamic arrays of any type in a functional way. 
 
 Dynamic lists exists for intrinsic types: 
-- allocatable characters(:)
+- allocatable characters
 - integers
 - reals
 - class(*)
@@ -27,7 +27,20 @@ The library contains the following methods
 - `sizeof`
 
 It also contains a template for creating lists of derived types (see `listof.inc`)
+To use it, simply use a combination of `#define` and `#include` macros
 
+```fortran
+module string_list
+    use string_m
+    
+    implicit none; private
+    
+#define T string
+#include "../include/listof.inc"
+#undef T
+
+end module
+```
 ## Building
 
 This library uses [t4](https://github.com/mono/t4) as a templating engine. 

@@ -68,13 +68,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "include", "include", "{3C57
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "logging", "logging", "{CA46F2D0-BB49-443D-B39D-32537371790B}"
-	ProjectSection(SolutionItems) = preProject
-		src\logging\include\logging.inc = src\logging\include\logging.inc
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "include", "include", "{EEDAC8EF-CAD7-4F31-A518-F97F2B3F5388}"
 	ProjectSection(SolutionItems) = preProject
-		src\export\include\export.inc = src\export\include\export.inc
+		src\logging\include\logging.inc = src\logging\include\logging.inc
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9C476199-8D59-452B-8F85-BBD64A0066AF}"

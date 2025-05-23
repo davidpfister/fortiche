@@ -34,7 +34,7 @@ console(test)
         character(:), allocatable :: cl
         type(string), allocatable :: args(:)
         integer :: i
-
+        
         cl = '"abc" d e'
         args = split_commandline_into_args(cl)
 
@@ -52,6 +52,6 @@ console(test)
         
         cl = '--d "test\"'
         args = split_commandline_into_args(cl)
-        
+
     end subroutine
 end
