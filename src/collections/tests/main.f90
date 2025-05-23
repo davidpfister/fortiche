@@ -61,7 +61,6 @@ TESTPROGRAM(main)
 
     TEST(test_string_list)
         use string_list
-        use polymorphic_list
 
         type(string) :: output
         list(string) :: l
@@ -75,11 +74,28 @@ TESTPROGRAM(main)
         EXPECT_STREQ(output, 'hello!')
     END_TEST
 
+    TEST(test_integer_list)
+        use intrinsic_list
+
+        integer :: output
+        list(integer(int32)) :: l
+
+        call add(l, 1)
+        call add(l, 2)
+        call add(l, 3)
+
+        output = l(2)
+
+        call clear(l)
+
+        EXPECT_EQ(sizeof(l), 0)
+        EXPECT_EQ(output, 2)
+    END_TEST
+
     TEST(test_char_list)
         use intrinsic_list
-        use iso_fortran_env
 
-        character(1) :: output
+        character(:), allocatable :: output
         list(character) :: l
 
         call add(l, 'a')

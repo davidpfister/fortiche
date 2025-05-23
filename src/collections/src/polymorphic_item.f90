@@ -1,9 +1,7 @@
 module polymorphic_item
     implicit none; private
 
-    public :: item_
-
-    type item_
+    type, public :: item_
         class(*), allocatable :: content
     contains
         procedure, pass(rhs), private :: assign_item

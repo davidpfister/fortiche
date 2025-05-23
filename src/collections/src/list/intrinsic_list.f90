@@ -39,8 +39,7 @@ module integer_list
 
     implicit none; private
 
-    public :: item_integer, &
-              add, &
+    public :: add, &
               get, &
               insert, &
               clear, &
@@ -49,7 +48,7 @@ module integer_list
               sizeof
 
 
-    type item_integer(k)
+    type, public :: item_integer(k)
         integer, kind :: k = kind(1_int32)
         integer(kind=k) :: content
     end type
@@ -111,28 +110,28 @@ module integer_list
 
 	
 	subroutine assign_item_int8(lhs, rhs)
-        integer(kind=int8), intent(inout)            ::  lhs
+        integer(kind=int8), intent(inout)  ::  lhs
         class(item_integer(int8)), intent(in)   ::  rhs
 
         lhs = rhs%content
     end subroutine
 	
 	subroutine assign_item_int16(lhs, rhs)
-        integer(kind=int16), intent(inout)            ::  lhs
+        integer(kind=int16), intent(inout)  ::  lhs
         class(item_integer(int16)), intent(in)   ::  rhs
 
         lhs = rhs%content
     end subroutine
 	
 	subroutine assign_item_int32(lhs, rhs)
-        integer(kind=int32), intent(inout)            ::  lhs
+        integer(kind=int32), intent(inout)  ::  lhs
         class(item_integer(int32)), intent(in)   ::  rhs
 
         lhs = rhs%content
     end subroutine
 	
 	subroutine assign_item_int64(lhs, rhs)
-        integer(kind=int64), intent(inout)            ::  lhs
+        integer(kind=int64), intent(inout)  ::  lhs
         class(item_integer(int64)), intent(in)   ::  rhs
 
         lhs = rhs%content
@@ -141,10 +140,10 @@ module integer_list
 	
 	subroutine add_to_int8(vec, val, n, chunk_size, finished)
         type(item_integer(int8)), allocatable, intent(inout) :: vec(:)
-        integer(kind=int8), intent(in)                    		   :: val
-        integer, intent(inout)                  			   :: n
-        integer, intent(in)                     			   :: chunk_size
-        logical, intent(in)                     			   :: finished
+        integer(kind=int8), intent(in)            :: val
+        integer, intent(inout)                  			    :: n
+        integer, intent(in)                     			    :: chunk_size
+        logical, intent(in)                     			    :: finished
         !private
         type(item_integer(int8)), allocatable :: tmp(:), tmp2(:)
         integer :: csize
@@ -183,10 +182,10 @@ module integer_list
 	
 	subroutine add_to_int16(vec, val, n, chunk_size, finished)
         type(item_integer(int16)), allocatable, intent(inout) :: vec(:)
-        integer(kind=int16), intent(in)                    		   :: val
-        integer, intent(inout)                  			   :: n
-        integer, intent(in)                     			   :: chunk_size
-        logical, intent(in)                     			   :: finished
+        integer(kind=int16), intent(in)            :: val
+        integer, intent(inout)                  			    :: n
+        integer, intent(in)                     			    :: chunk_size
+        logical, intent(in)                     			    :: finished
         !private
         type(item_integer(int16)), allocatable :: tmp(:), tmp2(:)
         integer :: csize
@@ -225,10 +224,10 @@ module integer_list
 	
 	subroutine add_to_int32(vec, val, n, chunk_size, finished)
         type(item_integer(int32)), allocatable, intent(inout) :: vec(:)
-        integer(kind=int32), intent(in)                    		   :: val
-        integer, intent(inout)                  			   :: n
-        integer, intent(in)                     			   :: chunk_size
-        logical, intent(in)                     			   :: finished
+        integer(kind=int32), intent(in)            :: val
+        integer, intent(inout)                  			    :: n
+        integer, intent(in)                     			    :: chunk_size
+        logical, intent(in)                     			    :: finished
         !private
         type(item_integer(int32)), allocatable :: tmp(:), tmp2(:)
         integer :: csize
@@ -267,10 +266,10 @@ module integer_list
 	
 	subroutine add_to_int64(vec, val, n, chunk_size, finished)
         type(item_integer(int64)), allocatable, intent(inout) :: vec(:)
-        integer(kind=int64), intent(in)                    		   :: val
-        integer, intent(inout)                  			   :: n
-        integer, intent(in)                     			   :: chunk_size
-        logical, intent(in)                     			   :: finished
+        integer(kind=int64), intent(in)            :: val
+        integer, intent(inout)                  			    :: n
+        integer, intent(in)                     			    :: chunk_size
+        logical, intent(in)                     			    :: finished
         !private
         type(item_integer(int64)), allocatable :: tmp(:), tmp2(:)
         integer :: csize
@@ -310,7 +309,7 @@ module integer_list
 	
 	subroutine add_item_int8(this, arg)
         type(item_integer(int8)), intent(inout), allocatable  :: this(:)
-        integer(kind=int8), intent(in)                     		:: arg
+        integer(kind=int8), intent(in)             :: arg
         !private
         integer :: count
         count = size(this)
@@ -319,7 +318,7 @@ module integer_list
 	
 	subroutine add_item_int16(this, arg)
         type(item_integer(int16)), intent(inout), allocatable  :: this(:)
-        integer(kind=int16), intent(in)                     		:: arg
+        integer(kind=int16), intent(in)             :: arg
         !private
         integer :: count
         count = size(this)
@@ -328,7 +327,7 @@ module integer_list
 	
 	subroutine add_item_int32(this, arg)
         type(item_integer(int32)), intent(inout), allocatable  :: this(:)
-        integer(kind=int32), intent(in)                     		:: arg
+        integer(kind=int32), intent(in)             :: arg
         !private
         integer :: count
         count = size(this)
@@ -337,7 +336,7 @@ module integer_list
 	
 	subroutine add_item_int64(this, arg)
         type(item_integer(int64)), intent(inout), allocatable  :: this(:)
-        integer(kind=int64), intent(in)                     		:: arg
+        integer(kind=int64), intent(in)             :: arg
         !private
         integer :: count
         count = size(this)
@@ -402,6 +401,7 @@ module integer_list
         type(item_integer(int8)), intent(inout), allocatable :: this(:)
 #ifdef __GFORTRAN__
         type(item_integer(int8)), allocatable :: tmp(:)
+        
         allocate (tmp(0))
         this = tmp
 #else
@@ -414,6 +414,7 @@ module integer_list
         type(item_integer(int16)), intent(inout), allocatable :: this(:)
 #ifdef __GFORTRAN__
         type(item_integer(int16)), allocatable :: tmp(:)
+        
         allocate (tmp(0))
         this = tmp
 #else
@@ -426,6 +427,7 @@ module integer_list
         type(item_integer(int32)), intent(inout), allocatable :: this(:)
 #ifdef __GFORTRAN__
         type(item_integer(int32)), allocatable :: tmp(:)
+        
         allocate (tmp(0))
         this = tmp
 #else
@@ -438,6 +440,7 @@ module integer_list
         type(item_integer(int64)), intent(inout), allocatable :: this(:)
 #ifdef __GFORTRAN__
         type(item_integer(int64)), allocatable :: tmp(:)
+        
         allocate (tmp(0))
         this = tmp
 #else
@@ -502,8 +505,8 @@ module integer_list
 	
 	subroutine insert_item_int8(this, i, arg)
         type(item_integer(int8)), intent(inout), allocatable  :: this(:)
-        integer, intent(in)                      :: i
-        integer(kind=int8), intent(in)                     :: arg
+        integer, intent(in)                          :: i
+        integer(kind=int8), intent(in) :: arg
         !private
         integer :: j, count
 
@@ -518,8 +521,8 @@ module integer_list
 	
 	subroutine insert_item_int16(this, i, arg)
         type(item_integer(int16)), intent(inout), allocatable  :: this(:)
-        integer, intent(in)                      :: i
-        integer(kind=int16), intent(in)                     :: arg
+        integer, intent(in)                          :: i
+        integer(kind=int16), intent(in) :: arg
         !private
         integer :: j, count
 
@@ -534,8 +537,8 @@ module integer_list
 	
 	subroutine insert_item_int32(this, i, arg)
         type(item_integer(int32)), intent(inout), allocatable  :: this(:)
-        integer, intent(in)                      :: i
-        integer(kind=int32), intent(in)                     :: arg
+        integer, intent(in)                          :: i
+        integer(kind=int32), intent(in) :: arg
         !private
         integer :: j, count
 
@@ -550,8 +553,8 @@ module integer_list
 	
 	subroutine insert_item_int64(this, i, arg)
         type(item_integer(int64)), intent(inout), allocatable  :: this(:)
-        integer, intent(in)                      :: i
-        integer(kind=int64), intent(in)                     :: arg
+        integer, intent(in)                          :: i
+        integer(kind=int64), intent(in) :: arg
         !private
         integer :: j, count
 
@@ -566,7 +569,7 @@ module integer_list
 
 	
 	subroutine remove_item_int8(this, i)
-        type(item_integer(int8)), intent(inout), allocatable    :: this(:)
+        type(item_integer(int8)), intent(inout), allocatable  :: this(:)
         integer, intent(in)                                       :: i
         !private
         type(item_integer(int8)), allocatable :: tmp(:)
@@ -583,7 +586,7 @@ module integer_list
     end subroutine
 	
 	subroutine remove_item_int16(this, i)
-        type(item_integer(int16)), intent(inout), allocatable    :: this(:)
+        type(item_integer(int16)), intent(inout), allocatable  :: this(:)
         integer, intent(in)                                       :: i
         !private
         type(item_integer(int16)), allocatable :: tmp(:)
@@ -600,7 +603,7 @@ module integer_list
     end subroutine
 	
 	subroutine remove_item_int32(this, i)
-        type(item_integer(int32)), intent(inout), allocatable    :: this(:)
+        type(item_integer(int32)), intent(inout), allocatable  :: this(:)
         integer, intent(in)                                       :: i
         !private
         type(item_integer(int32)), allocatable :: tmp(:)
@@ -617,7 +620,7 @@ module integer_list
     end subroutine
 	
 	subroutine remove_item_int64(this, i)
-        type(item_integer(int64)), intent(inout), allocatable    :: this(:)
+        type(item_integer(int64)), intent(inout), allocatable  :: this(:)
         integer, intent(in)                                       :: i
         !private
         type(item_integer(int64)), allocatable :: tmp(:)
@@ -635,7 +638,7 @@ module integer_list
 
 	
 	integer function size_item_int8(this) result(res)
-        type(item_integer(int8)), intent(inout), allocatable :: this(:)
+        type(item_integer(int8)), intent(inout), allocatable  :: this(:)
         if (.not. allocated(this)) then 
             res = 0
         else
@@ -644,7 +647,7 @@ module integer_list
     end function
 	
 	integer function size_item_int16(this) result(res)
-        type(item_integer(int16)), intent(inout), allocatable :: this(:)
+        type(item_integer(int16)), intent(inout), allocatable  :: this(:)
         if (.not. allocated(this)) then 
             res = 0
         else
@@ -653,7 +656,7 @@ module integer_list
     end function
 	
 	integer function size_item_int32(this) result(res)
-        type(item_integer(int32)), intent(inout), allocatable :: this(:)
+        type(item_integer(int32)), intent(inout), allocatable  :: this(:)
         if (.not. allocated(this)) then 
             res = 0
         else
@@ -662,7 +665,7 @@ module integer_list
     end function
 	
 	integer function size_item_int64(this) result(res)
-        type(item_integer(int64)), intent(inout), allocatable :: this(:)
+        type(item_integer(int64)), intent(inout), allocatable  :: this(:)
         if (.not. allocated(this)) then 
             res = 0
         else
@@ -676,8 +679,7 @@ module real_list
 
     implicit none; private
 
-    public :: item_real, &
-              add, &
+    public :: add, &
               get, &
               insert, &
               clear, &
@@ -686,7 +688,7 @@ module real_list
               sizeof
 
 
-    type item_real(k)
+    type, public :: item_real(k)
         integer, kind :: k = kind(1.0_real64)
         real(kind=k) :: content
     end type
@@ -740,21 +742,21 @@ module real_list
 
 	
 	subroutine assign_item_real32(lhs, rhs)
-        real(kind=real32), intent(inout)            ::  lhs
+        real(kind=real32), intent(inout)  ::  lhs
         class(item_real(real32)), intent(in)   ::  rhs
 
         lhs = rhs%content
     end subroutine
 	
 	subroutine assign_item_real64(lhs, rhs)
-        real(kind=real64), intent(inout)            ::  lhs
+        real(kind=real64), intent(inout)  ::  lhs
         class(item_real(real64)), intent(in)   ::  rhs
 
         lhs = rhs%content
     end subroutine
 	
 	subroutine assign_item_real128(lhs, rhs)
-        real(kind=real128), intent(inout)            ::  lhs
+        real(kind=real128), intent(inout)  ::  lhs
         class(item_real(real128)), intent(in)   ::  rhs
 
         lhs = rhs%content
@@ -763,10 +765,10 @@ module real_list
 	
 	subroutine add_to_real32(vec, val, n, chunk_size, finished)
         type(item_real(real32)), allocatable, intent(inout) :: vec(:)
-        real(kind=real32), intent(in)                    		   :: val
-        integer, intent(inout)                  			   :: n
-        integer, intent(in)                     			   :: chunk_size
-        logical, intent(in)                     			   :: finished
+        real(kind=real32), intent(in)            :: val
+        integer, intent(inout)                  			    :: n
+        integer, intent(in)                     			    :: chunk_size
+        logical, intent(in)                     			    :: finished
         !private
         type(item_real(real32)), allocatable :: tmp(:), tmp2(:)
         integer :: csize
@@ -805,10 +807,10 @@ module real_list
 	
 	subroutine add_to_real64(vec, val, n, chunk_size, finished)
         type(item_real(real64)), allocatable, intent(inout) :: vec(:)
-        real(kind=real64), intent(in)                    		   :: val
-        integer, intent(inout)                  			   :: n
-        integer, intent(in)                     			   :: chunk_size
-        logical, intent(in)                     			   :: finished
+        real(kind=real64), intent(in)            :: val
+        integer, intent(inout)                  			    :: n
+        integer, intent(in)                     			    :: chunk_size
+        logical, intent(in)                     			    :: finished
         !private
         type(item_real(real64)), allocatable :: tmp(:), tmp2(:)
         integer :: csize
@@ -847,10 +849,10 @@ module real_list
 	
 	subroutine add_to_real128(vec, val, n, chunk_size, finished)
         type(item_real(real128)), allocatable, intent(inout) :: vec(:)
-        real(kind=real128), intent(in)                    		   :: val
-        integer, intent(inout)                  			   :: n
-        integer, intent(in)                     			   :: chunk_size
-        logical, intent(in)                     			   :: finished
+        real(kind=real128), intent(in)            :: val
+        integer, intent(inout)                  			    :: n
+        integer, intent(in)                     			    :: chunk_size
+        logical, intent(in)                     			    :: finished
         !private
         type(item_real(real128)), allocatable :: tmp(:), tmp2(:)
         integer :: csize
@@ -890,7 +892,7 @@ module real_list
 	
 	subroutine add_item_real32(this, arg)
         type(item_real(real32)), intent(inout), allocatable  :: this(:)
-        real(kind=real32), intent(in)                     		:: arg
+        real(kind=real32), intent(in)             :: arg
         !private
         integer :: count
         count = size(this)
@@ -899,7 +901,7 @@ module real_list
 	
 	subroutine add_item_real64(this, arg)
         type(item_real(real64)), intent(inout), allocatable  :: this(:)
-        real(kind=real64), intent(in)                     		:: arg
+        real(kind=real64), intent(in)             :: arg
         !private
         integer :: count
         count = size(this)
@@ -908,7 +910,7 @@ module real_list
 	
 	subroutine add_item_real128(this, arg)
         type(item_real(real128)), intent(inout), allocatable  :: this(:)
-        real(kind=real128), intent(in)                     		:: arg
+        real(kind=real128), intent(in)             :: arg
         !private
         integer :: count
         count = size(this)
@@ -960,6 +962,7 @@ module real_list
         type(item_real(real32)), intent(inout), allocatable :: this(:)
 #ifdef __GFORTRAN__
         type(item_real(real32)), allocatable :: tmp(:)
+        
         allocate (tmp(0))
         this = tmp
 #else
@@ -972,6 +975,7 @@ module real_list
         type(item_real(real64)), intent(inout), allocatable :: this(:)
 #ifdef __GFORTRAN__
         type(item_real(real64)), allocatable :: tmp(:)
+        
         allocate (tmp(0))
         this = tmp
 #else
@@ -984,6 +988,7 @@ module real_list
         type(item_real(real128)), intent(inout), allocatable :: this(:)
 #ifdef __GFORTRAN__
         type(item_real(real128)), allocatable :: tmp(:)
+        
         allocate (tmp(0))
         this = tmp
 #else
@@ -1035,8 +1040,8 @@ module real_list
 	
 	subroutine insert_item_real32(this, i, arg)
         type(item_real(real32)), intent(inout), allocatable  :: this(:)
-        integer, intent(in)                      :: i
-        real(kind=real32), intent(in)                     :: arg
+        integer, intent(in)                          :: i
+        real(kind=real32), intent(in) :: arg
         !private
         integer :: j, count
 
@@ -1051,8 +1056,8 @@ module real_list
 	
 	subroutine insert_item_real64(this, i, arg)
         type(item_real(real64)), intent(inout), allocatable  :: this(:)
-        integer, intent(in)                      :: i
-        real(kind=real64), intent(in)                     :: arg
+        integer, intent(in)                          :: i
+        real(kind=real64), intent(in) :: arg
         !private
         integer :: j, count
 
@@ -1067,8 +1072,8 @@ module real_list
 	
 	subroutine insert_item_real128(this, i, arg)
         type(item_real(real128)), intent(inout), allocatable  :: this(:)
-        integer, intent(in)                      :: i
-        real(kind=real128), intent(in)                     :: arg
+        integer, intent(in)                          :: i
+        real(kind=real128), intent(in) :: arg
         !private
         integer :: j, count
 
@@ -1083,7 +1088,7 @@ module real_list
 
 	
 	subroutine remove_item_real32(this, i)
-        type(item_real(real32)), intent(inout), allocatable    :: this(:)
+        type(item_real(real32)), intent(inout), allocatable  :: this(:)
         integer, intent(in)                                       :: i
         !private
         type(item_real(real32)), allocatable :: tmp(:)
@@ -1100,7 +1105,7 @@ module real_list
     end subroutine
 	
 	subroutine remove_item_real64(this, i)
-        type(item_real(real64)), intent(inout), allocatable    :: this(:)
+        type(item_real(real64)), intent(inout), allocatable  :: this(:)
         integer, intent(in)                                       :: i
         !private
         type(item_real(real64)), allocatable :: tmp(:)
@@ -1117,7 +1122,7 @@ module real_list
     end subroutine
 	
 	subroutine remove_item_real128(this, i)
-        type(item_real(real128)), intent(inout), allocatable    :: this(:)
+        type(item_real(real128)), intent(inout), allocatable  :: this(:)
         integer, intent(in)                                       :: i
         !private
         type(item_real(real128)), allocatable :: tmp(:)
@@ -1135,7 +1140,7 @@ module real_list
 
 	
 	integer function size_item_real32(this) result(res)
-        type(item_real(real32)), intent(inout), allocatable :: this(:)
+        type(item_real(real32)), intent(inout), allocatable  :: this(:)
         if (.not. allocated(this)) then 
             res = 0
         else
@@ -1144,7 +1149,7 @@ module real_list
     end function
 	
 	integer function size_item_real64(this) result(res)
-        type(item_real(real64)), intent(inout), allocatable :: this(:)
+        type(item_real(real64)), intent(inout), allocatable  :: this(:)
         if (.not. allocated(this)) then 
             res = 0
         else
@@ -1153,7 +1158,7 @@ module real_list
     end function
 	
 	integer function size_item_real128(this) result(res)
-        type(item_real(real128)), intent(inout), allocatable :: this(:)
+        type(item_real(real128)), intent(inout), allocatable  :: this(:)
         if (.not. allocated(this)) then 
             res = 0
         else
@@ -1167,8 +1172,7 @@ module logical_list
 
     implicit none; private
 
-    public :: item_logical, &
-              add, &
+    public :: add, &
               get, &
               insert, &
               clear, &
@@ -1178,7 +1182,7 @@ module logical_list
 
     integer, parameter :: log32 = kind(.true.)
 
-    type item_logical(k)
+    type, public :: item_logical(k)
         integer, kind :: k = kind(.true.)
         logical(kind=k) :: content
     end type
@@ -1216,7 +1220,7 @@ module logical_list
 
 	
 	subroutine assign_item_log32(lhs, rhs)
-        logical(kind=log32), intent(inout)            ::  lhs
+        logical(kind=log32), intent(inout)  ::  lhs
         class(item_logical(log32)), intent(in)   ::  rhs
 
         lhs = rhs%content
@@ -1225,10 +1229,10 @@ module logical_list
 	
 	subroutine add_to_log32(vec, val, n, chunk_size, finished)
         type(item_logical(log32)), allocatable, intent(inout) :: vec(:)
-        logical(kind=log32), intent(in)                    		   :: val
-        integer, intent(inout)                  			   :: n
-        integer, intent(in)                     			   :: chunk_size
-        logical, intent(in)                     			   :: finished
+        logical(kind=log32), intent(in)            :: val
+        integer, intent(inout)                  			    :: n
+        integer, intent(in)                     			    :: chunk_size
+        logical, intent(in)                     			    :: finished
         !private
         type(item_logical(log32)), allocatable :: tmp(:), tmp2(:)
         integer :: csize
@@ -1268,7 +1272,7 @@ module logical_list
 	
 	subroutine add_item_log32(this, arg)
         type(item_logical(log32)), intent(inout), allocatable  :: this(:)
-        logical(kind=log32), intent(in)                     		:: arg
+        logical(kind=log32), intent(in)             :: arg
         !private
         integer :: count
         count = size(this)
@@ -1294,6 +1298,7 @@ module logical_list
         type(item_logical(log32)), intent(inout), allocatable :: this(:)
 #ifdef __GFORTRAN__
         type(item_logical(log32)), allocatable :: tmp(:)
+        
         allocate (tmp(0))
         this = tmp
 #else
@@ -1319,8 +1324,8 @@ module logical_list
 	
 	subroutine insert_item_log32(this, i, arg)
         type(item_logical(log32)), intent(inout), allocatable  :: this(:)
-        integer, intent(in)                      :: i
-        logical(kind=log32), intent(in)                     :: arg
+        integer, intent(in)                          :: i
+        logical(kind=log32), intent(in) :: arg
         !private
         integer :: j, count
 
@@ -1335,7 +1340,7 @@ module logical_list
 
 	
 	subroutine remove_item_log32(this, i)
-        type(item_logical(log32)), intent(inout), allocatable    :: this(:)
+        type(item_logical(log32)), intent(inout), allocatable  :: this(:)
         integer, intent(in)                                       :: i
         !private
         type(item_logical(log32)), allocatable :: tmp(:)
@@ -1353,7 +1358,7 @@ module logical_list
 
 	
 	integer function size_item_log32(this) result(res)
-        type(item_logical(log32)), intent(inout), allocatable :: this(:)
+        type(item_logical(log32)), intent(inout), allocatable  :: this(:)
         if (.not. allocated(this)) then 
             res = 0
         else
@@ -1367,8 +1372,7 @@ module character_list
 
     implicit none; private
 
-    public :: item_character, &
-              add, &
+    public :: add, &
               get, &
               insert, &
               clear, &
@@ -1378,59 +1382,58 @@ module character_list
 
     integer, parameter :: char8 = kind('a') 
 
-    type item_character(k)
-        integer, kind :: k = kind('a')
-        character(len=:, kind=k), allocatable :: content
+    type, public :: item_character
+        character(:), allocatable :: content
     end type
 
 	interface assignment(=)
-        module procedure :: assign_item_char8
+        module procedure :: assign_item_
     end interface
 
     interface add
-        module procedure :: add_item_char8
-        module procedure :: add_range_char8
+        module procedure :: add_item_
+        module procedure :: add_range_
     end interface
 
     interface clear
-        module procedure  :: clear_item_char8
+        module procedure  :: clear_item_
     end interface
     
     interface get
-        module procedure  :: get_item_char8
+        module procedure  :: get_item_
     end interface
     
     interface insert
-        module procedure :: insert_item_char8
+        module procedure :: insert_item_
     end interface
     
     interface remove
-        module procedure :: remove_item_char8
+        module procedure :: remove_item_
     end interface
     
     interface sizeof
-        module procedure  :: size_item_char8
+        module procedure  :: size_item_
     end interface
 	
 	contains
 
 	
-	subroutine assign_item_char8(lhs, rhs)
-        character(len=*, kind=char8), intent(inout)            ::  lhs
-        class(item_character(char8)), intent(in)   ::  rhs
+	subroutine assign_item_(lhs, rhs)
+        character(:), allocatable, intent(inout)  ::  lhs
+        class(item_character), intent(in)   ::  rhs
 
         lhs = rhs%content
     end subroutine
 
 	
-	subroutine add_to_char8(vec, val, n, chunk_size, finished)
-        type(item_character(char8)), allocatable, intent(inout) :: vec(:)
-        character(len=*, kind=char8), intent(in)                    		   :: val
-        integer, intent(inout)                  			   :: n
-        integer, intent(in)                     			   :: chunk_size
-        logical, intent(in)                     			   :: finished
+	subroutine add_to_(vec, val, n, chunk_size, finished)
+        type(item_character), allocatable, intent(inout) :: vec(:)
+        character(len=*), intent(in)               :: val
+        integer, intent(inout)                  			    :: n
+        integer, intent(in)                     			    :: chunk_size
+        logical, intent(in)                     			    :: finished
         !private
-        type(item_character(char8)), allocatable :: tmp(:), tmp2(:)
+        type(item_character), allocatable :: tmp(:), tmp2(:)
         integer :: csize
         csize = chunk_size
 
@@ -1466,34 +1469,35 @@ module character_list
     end subroutine
 
 	
-	subroutine add_item_char8(this, arg)
-        type(item_character(char8)), intent(inout), allocatable  :: this(:)
-        character(len=*, kind=char8), intent(in)                     		:: arg
+	subroutine add_item_(this, arg)
+        type(item_character), intent(inout), allocatable  :: this(:)
+        character(len=*), intent(in)             :: arg
         !private
         integer :: count
         count = size(this)
-        call add_to_char8(this, arg, count, BUFFER_SIZE, finished=.true.)
+        call add_to_(this, arg, count, BUFFER_SIZE, finished=.true.)
     end subroutine
 
 	
-	subroutine add_range_char8(this, args)
-        type(item_character(char8)), intent(inout), allocatable  :: this(:)
-        character(len=*, kind=char8), intent(in)             :: args(:)
+	subroutine add_range_(this, args)
+        type(item_character), intent(inout), allocatable  :: this(:)
+        character(len=*), intent(in)             :: args(:)
         !private
         integer :: i, n, count
 
         n = size(args)
         count = size(this)
         do i = 1, n
-            call add_to_char8(this, args(i), count, BUFFER_SIZE, finished=i == n)
+            call add_to_(this, args(i), count, BUFFER_SIZE, finished=i == n)
         end do
     end subroutine
 
 	
-	subroutine clear_item_char8(this)
-        type(item_character(char8)), intent(inout), allocatable :: this(:)
+	subroutine clear_item_(this)
+        type(item_character), intent(inout), allocatable :: this(:)
 #ifdef __GFORTRAN__
-        type(item_character(char8)), allocatable :: tmp(:)
+       type(item_character), allocatable :: tmp(:)
+        
         allocate (tmp(0))
         this = tmp
 #else
@@ -1503,10 +1507,10 @@ module character_list
     end subroutine
 
 	
-	function get_item_char8(this, key) result(res)
-        type(item_character(char8)), intent(inout) :: this(:)
+	function get_item_(this, key) result(res)
+       type(item_character), intent(inout) :: this(:)
         integer, intent(in) :: key
-        character(len=:, kind=char8), allocatable :: res
+        character(len=:), allocatable :: res
         !private
         integer :: n
         n = sizeof(this)
@@ -1517,15 +1521,15 @@ module character_list
     end function
 
 	
-	subroutine insert_item_char8(this, i, arg)
-        type(item_character(char8)), intent(inout), allocatable  :: this(:)
-        integer, intent(in)                      :: i
-        character(len=*, kind=char8), intent(in)                     :: arg
+	subroutine insert_item_(this, i, arg)
+        type(item_character), intent(inout), allocatable  :: this(:)
+        integer, intent(in)                              :: i
+        character(len=*), intent(in) :: arg
         !private
         integer :: j, count
 
         count = size(this)
-        call add_to_char8(this, arg, count, BUFFER_SIZE, finished=.true.)
+        call add_to_(this, arg, count, BUFFER_SIZE, finished=.true.)
 
         do j = count, i + 1, -1
             this(j) = this(j - 1)
@@ -1534,11 +1538,11 @@ module character_list
     end subroutine
 
 	
-	subroutine remove_item_char8(this, i)
-        type(item_character(char8)), intent(inout), allocatable    :: this(:)
+	subroutine remove_item_(this, i)
+        type(item_character), intent(inout), allocatable  :: this(:)
         integer, intent(in)                                       :: i
         !private
-        type(item_character(char8)), allocatable :: tmp(:)
+        type(item_character), allocatable :: tmp(:)
         integer :: j, n
 
         n = size(this)
@@ -1552,8 +1556,8 @@ module character_list
     end subroutine
 
 	
-	integer function size_item_char8(this) result(res)
-        type(item_character(char8)), intent(inout), allocatable :: this(:)
+	integer function size_item_(this) result(res)
+        type(item_character), intent(inout), allocatable  :: this(:)
         if (.not. allocated(this)) then 
             res = 0
         else
@@ -1563,6 +1567,7 @@ module character_list
 end module
 
 module intrinsic_list
+    use iso_fortran_env
     use integer_list
     use real_list
     use logical_list

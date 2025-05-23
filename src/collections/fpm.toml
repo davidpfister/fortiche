@@ -20,5 +20,5 @@ cpp.suffixes = ["F90", "f90"]
 cpp.macros = ["_FPM"]
 
 [[test]]
-name       = "test_generics"
+name       = "test_collections"
 source-dir = "tests"

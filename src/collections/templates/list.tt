@@ -37,7 +37,6 @@
 #include "../include/list.inc"
 <# 
     string[] kinds = { "integer", "real", "logical", "character" };
-    string prefix = "";
     string[] types = {""}; 
     foreach (string knd in kinds) { #>
 
@@ -46,8 +45,7 @@ module <#=knd#>_list
 
     implicit none; private
 
-    public :: item_<#=knd#>, &
-              add, &
+    public :: add, &
               get, &
               insert, &
               clear, &
@@ -60,8 +58,7 @@ module <#=knd#>_list
 } else if (knd == "real") {
     types = new string[3]{ "real32", "real64", "real128" };
 } else if (knd == "character") {
-    types = new string[1]{ "char8" };
-    prefix = "len=*, ";
+    types = new string[1]{ "" };
 } else if (knd == "logical") {
     types = new string[1]{ "log32" };
 } #>
@@ -72,17 +69,19 @@ module <#=knd#>_list
     integer, parameter :: log32 = kind(.true.)
 <# } #>
 
-    type item_<#=knd#>(k)
 <# if (knd == "integer") { #>
+    type, public :: item_<#=knd#>(k)
         integer, kind :: k = kind(1_int32)
         integer(kind=k) :: content
 <# } else if (knd == "real") { #>
+    type, public :: item_<#=knd#>(k)
         integer, kind :: k = kind(1.0_real64)
         real(kind=k) :: content
 <# } else if (knd == "character") { #>
-        integer, kind :: k = kind('a')
-        character(len=:, kind=k), allocatable :: content
+    type, public :: item_<#=knd#>
+        character(:), allocatable :: content
 <# } else if (knd == "logical") { #>
+    type, public :: item_<#=knd#>(k)
         integer, kind :: k = kind(.true.)
         logical(kind=k) :: content
 <# } #>
@@ -135,8 +134,13 @@ module <#=knd#>_list
 
 <# foreach (string a in types) { #>	
 	subroutine assign_item_<#=a#>(lhs, rhs)
-        <#=knd#>(<#=prefix#>kind=<#=a#>), intent(inout)            ::  lhs
+<# if (knd == "character") { #>
+        <#=knd#>(:), allocatable, intent(inout)  ::  lhs
+        class(item_<#=knd#>), intent(in)   ::  rhs
+<# } else { #>
+        <#=knd#>(kind=<#=a#>), intent(inout)  ::  lhs
         class(item_<#=knd#>(<#=a#>)), intent(in)   ::  rhs
+<# } #>
 
         lhs = rhs%content
     end subroutine
@@ -144,13 +148,22 @@ module <#=knd#>_list
 
 <# foreach (string a in types) { #>	
 	subroutine add_to_<#=a#>(vec, val, n, chunk_size, finished)
+<# if (knd == "character") { #>
+        type(item_<#=knd#>), allocatable, intent(inout) :: vec(:)
+        <#=knd#>(len=*), intent(in)               :: val
+<# } else { #>
         type(item_<#=knd#>(<#=a#>)), allocatable, intent(inout) :: vec(:)
-        <#=knd#>(<#=prefix#>kind=<#=a#>), intent(in)                    		   :: val
-        integer, intent(inout)                  			   :: n
-        integer, intent(in)                     			   :: chunk_size
-        logical, intent(in)                     			   :: finished
+        <#=knd#>(kind=<#=a#>), intent(in)            :: val
+<# } #>
+        integer, intent(inout)                  			    :: n
+        integer, intent(in)                     			    :: chunk_size
+        logical, intent(in)                     			    :: finished
         !private
+<# if (knd == "character") { #>
+        type(item_<#=knd#>), allocatable :: tmp(:), tmp2(:)
+<# } else { #>
         type(item_<#=knd#>(<#=a#>)), allocatable :: tmp(:), tmp2(:)
+<# } #>
         integer :: csize
         csize = chunk_size
 
@@ -188,8 +201,13 @@ module <#=knd#>_list
 
 <# foreach (string a in types) { #>	
 	subroutine add_item_<#=a#>(this, arg)
+<# if (knd == "character") { #>
+        type(item_<#=knd#>), intent(inout), allocatable  :: this(:)
+        <#=knd#>(len=*), intent(in)             :: arg
+<# } else { #>
         type(item_<#=knd#>(<#=a#>)), intent(inout), allocatable  :: this(:)
-        <#=knd#>(<#=prefix#>kind=<#=a#>), intent(in)                     		:: arg
+        <#=knd#>(kind=<#=a#>), intent(in)             :: arg
+<# } #>
         !private
         integer :: count
         count = size(this)
@@ -199,8 +217,13 @@ module <#=knd#>_list
 
 <# foreach (string a in types) { #>	
 	subroutine add_range_<#=a#>(this, args)
+<# if (knd == "character") { #>
+        type(item_<#=knd#>), intent(inout), allocatable  :: this(:)
+        <#=knd#>(len=*), intent(in)             :: args(:)
+<# } else { #>
         type(item_<#=knd#>(<#=a#>)), intent(inout), allocatable  :: this(:)
-        <#=knd#>(<#=prefix#>kind=<#=a#>), intent(in)             :: args(:)
+        <#=knd#>(kind=<#=a#>), intent(in)             :: args(:)
+<# } #>
         !private
         integer :: i, n, count
 
@@ -214,9 +237,18 @@ module <#=knd#>_list
 
 <# foreach (string a in types) { #>	
 	subroutine clear_item_<#=a#>(this)
+<# if (knd == "character") { #>
+        type(item_<#=knd#>), intent(inout), allocatable :: this(:)
+<# } else { #>
         type(item_<#=knd#>(<#=a#>)), intent(inout), allocatable :: this(:)
+<# } #>
 #ifdef __GFORTRAN__
+<# if (knd == "character") { #>
+       type(item_<#=knd#>), allocatable :: tmp(:)
+<# } else { #>
         type(item_<#=knd#>(<#=a#>)), allocatable :: tmp(:)
+<# } #>
+        
         allocate (tmp(0))
         this = tmp
 #else
@@ -228,12 +260,16 @@ module <#=knd#>_list
 
 <# foreach (string a in types) { #>	
 	function get_item_<#=a#>(this, key) result(res)
+<# if (knd == "character") { #>
+       type(item_<#=knd#>), intent(inout) :: this(:)
+<# } else { #>
         type(item_<#=knd#>(<#=a#>)), intent(inout) :: this(:)
+<# } #>
         integer, intent(in) :: key
 <# if (knd == "character") { #>
-        <#=knd#>(len=:, kind=<#=a#>), allocatable :: res
+        <#=knd#>(len=:), allocatable :: res
 <# } else { #>
-        <#=knd#>(<#=prefix#>kind=<#=a#>), allocatable :: res
+        <#=knd#>(kind=<#=a#>), allocatable :: res
 <# } #>
         !private
         integer :: n
@@ -247,9 +283,15 @@ module <#=knd#>_list
 
 <# foreach (string a in types) { #>	
 	subroutine insert_item_<#=a#>(this, i, arg)
+<# if (knd == "character") { #>
+        type(item_<#=knd#>), intent(inout), allocatable  :: this(:)
+        integer, intent(in)                              :: i
+        <#=knd#>(len=*), intent(in) :: arg
+<# } else { #>
         type(item_<#=knd#>(<#=a#>)), intent(inout), allocatable  :: this(:)
-        integer, intent(in)                      :: i
-        <#=knd#>(<#=prefix#>kind=<#=a#>), intent(in)                     :: arg
+        integer, intent(in)                          :: i
+        <#=knd#>(kind=<#=a#>), intent(in) :: arg
+<# } #>
         !private
         integer :: j, count
 
@@ -265,10 +307,18 @@ module <#=knd#>_list
 
 <# foreach (string a in types) { #>	
 	subroutine remove_item_<#=a#>(this, i)
-        type(item_<#=knd#>(<#=a#>)), intent(inout), allocatable    :: this(:)
+<# if (knd == "character") { #>
+        type(item_<#=knd#>), intent(inout), allocatable  :: this(:)
+<# } else { #>
+        type(item_<#=knd#>(<#=a#>)), intent(inout), allocatable  :: this(:)
+<# } #>
         integer, intent(in)                                       :: i
         !private
+<# if (knd == "character") { #>
+        type(item_<#=knd#>), allocatable :: tmp(:)
+<# } else { #>
         type(item_<#=knd#>(<#=a#>)), allocatable :: tmp(:)
+<# } #>
         integer :: j, n
 
         n = size(this)
@@ -284,7 +334,11 @@ module <#=knd#>_list
 
 <# foreach (string a in types) { #>	
 	integer function size_item_<#=a#>(this) result(res)
-        type(item_<#=knd#>(<#=a#>)), intent(inout), allocatable :: this(:)
+<# if (knd == "character") { #>
+        type(item_<#=knd#>), intent(inout), allocatable  :: this(:)
+<# } else { #>
+        type(item_<#=knd#>(<#=a#>)), intent(inout), allocatable  :: this(:)
+<# } #>
         if (.not. allocated(this)) then 
             res = 0
         else
@@ -296,6 +350,7 @@ end module
 <# } #>
 
 module intrinsic_list
+    use iso_fortran_env
 <# foreach (string knd in kinds) { #>
     use <#=knd#>_list
 <# } #>
