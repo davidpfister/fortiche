@@ -50,5 +50,8 @@ console(test)
         cl = 'a"b"" c d'
         args = split_commandline_into_args(cl)
         
+        cl = '--d "test\"'
+        args = split_commandline_into_args(cl)
+        
     end subroutine
 end

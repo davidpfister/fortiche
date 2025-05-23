@@ -51,7 +51,8 @@
 		</Configuration>
 	</Configurations>
 	<Files>
-		<File RelativePath=".\main.f90"/>
+		<File RelativePath=".\main.f90">
+		</File>
 	</Files>
 	<Globals/>
 </VisualStudioProject>

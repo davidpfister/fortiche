@@ -61,8 +61,11 @@
 			<File RelativePath=".\list\polymorphic_list.f90">
 			</File>
 		</Filter>
-		<File RelativePath=".\equatable.f90">
-		</File>
+		<Filter Name="dict">
+			<File RelativePath=".\dict\dict.f90">
+			</File>
+		</Filter>
+		<File RelativePath=".\equatable.f90"/>
 		<File RelativePath=".\polymorphic_item.f90">
 		</File>
 	</Files>

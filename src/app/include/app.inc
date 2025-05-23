@@ -45,8 +45,10 @@ module applibrary
     contains
         procedure, private, pass(lhs) :: string_assign_string
         procedure, private, pass(lhs) :: string_assign_character
+        procedure, private, pass(rhs) :: character_assign_string
         generic :: assignment(=)      => string_assign_string,    &  
-                                         string_assign_character
+                                         string_assign_character, &
+                                         character_assign_string
         procedure, private, pass(dtv) :: string_read_formatted
         procedure, private, pass(dtv) :: string_write_formatted
         procedure, private, pass(dtv) :: string_read_unformatted !! Unformatted input.
@@ -117,12 +119,12 @@ module applibrary
     subroutine app_abort(this)
         class(application), intent(inout) :: this
         interface
-            subroutine abort() bind(C, name="abort")
+            subroutine abort_c() bind(C, name="abort")
             end subroutine
         end interface
 
         call app_finalize(this)
-        call abort()
+        call abort_c()
     end subroutine
 
     subroutine app_shutdown(this, code)
@@ -330,6 +332,13 @@ module applibrary
         character(*), intent(in)     :: rhs
 
         lhs%chars = rhs
+    end subroutine
+
+    pure subroutine character_assign_string(lhs, rhs)
+        character(:), allocatable, intent(inout) :: lhs
+        class(string), intent(in)     :: rhs
+
+        if (allocated(rhs%chars)) lhs = rhs%chars
     end subroutine
     
     function string_trim(str) result(res)

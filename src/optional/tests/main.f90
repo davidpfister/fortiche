@@ -1,4 +1,4 @@
-#include "../include/optional.inc"
+#include "../include/optional.inc"   
 program main
     implicit none
 
@@ -12,11 +12,11 @@ program main
 
     contains
 
-    function test(option) result(res)
+    function test(option) result(res)       
         character(*), optional :: option
         !private
         character(:), allocatable :: res
-
+        
         optionalize(res, option, 'Hello World!')
 
     end function

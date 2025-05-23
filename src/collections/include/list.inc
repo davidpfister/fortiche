@@ -26,17 +26,11 @@
 ! (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 ! OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifdef __GFORTRAN__
-#define MACRO_CAT2(A,B) A/**/B
-#define MACRO_CAT3(A,B,C) MACRO_CAT2(A,B)/**/C
-#define MACRO_CAT4(A,B,C,D) MACRO_CAT3(A,B,C)/**/D
-#define MACRO_CAT5(A,B,C,D,E) MACRO_CAT4(A,B,C,D)/**/E
-#define MACRO_STRINGIFY(A) "A"
+#define _CAT2(A,B) A/**/B
+#define _CAT3(A,B,C) _CAT2(A,B)/**/C
 #else
-#define MACRO_CAT2(A,B) A##B
-#define MACRO_CAT3(A,B,C) A##B##C
-#define MACRO_CAT4(A,B,C,D) A##B##C##D
-#define MACRO_CAT5(A,B,C,D,E) A##B##C##D##E
-#define MACRO_STRINGIFY(A) #A
+#define _CAT2(A,B) A##B
+#define _CAT3(A,B,C) _CAT2(A##B,C)
 #endif
-#define list(x) type(MACRO_CAT3(item,_,x)), dimension(:), allocatable
+#define list(x) type(_CAT3(item,_,x)), dimension(:), allocatable
 #define BUFFER_SIZE 256
