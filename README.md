@@ -12,7 +12,7 @@
   <h3 align="center">fortiche</h3>
 
   <p align="center">
-    Fortran interfaces, classes and header extensions.
+    Fortran interfaces, classes, headers and extensions.
     <br />
     <a href="https://github.com/davidpfister/fortiche"><strong>Explore the project »</strong></a>
     <br />
