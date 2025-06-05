@@ -365,7 +365,12 @@ module applibrary
         character(*), intent(inout) :: iomsg !< IO status message.
 
         if (allocated(dtv%chars)) then
-            write (unit, '(A)', iostat=iostat, iomsg=iomsg) dtv%chars
+			select case(iotype)
+			case('LISTDIRECTED')
+				write (unit, '(1x, A)', iostat=iostat, iomsg=iomsg, advance='no') dtv%chars
+			case default
+				write (unit, '(A)', iostat=iostat, iomsg=iomsg) dtv%chars
+			end select
         else
             write (unit, '(A)', iostat=iostat, iomsg=iomsg) ''
         end if
