@@ -49,8 +49,8 @@ end do;
 nfailures = nfailures + 1;                                             \
 call cpu_time(toc_assert);                                             \
 write(*,'(A, A, I3, A)') testname,'(', __LINE__,') : error:'; \
-write(*,'(A)') '   Actual: ', actual; \
-write(*,'(A)') ' Expected: ', expected; \
+print*, '   Actual: ', actual; \
+print*, ' Expected: ', expected; \
 write(*,'(A, A, A, A, A, I3, A, E10.3, A)') ESCAPE//'[31m'//'[  FAILED  ]'//ESCAPE//'[0m ', testcase,'.', testname, ' line ', __LINE__,' (', toc_assert - tic_assert, ' ms)'; \
 call flush(output_unit);
 # define REPORT_SUCCESS                                                \
@@ -73,16 +73,16 @@ use, intrinsic :: iso_fortran_env;
 # define IMPLICIT_NONE                                                 \
 implicit none;
 # define TEST(case)                                                    \
-write(*,'(A, A)') '[----------] Test ', MACRO_STRINGIFY(case);         \
-call flush(output_unit);                                               \
 block;                                                                 \
-character(*), parameter :: testcase = MACRO_STRINGIFY(case);           \
 integer :: nfailures = 0;                                              \
 integer :: nsuccess = 0;                                               \
 real, allocatable :: tic_case, toc_case;                               \
+associate(testcase => case);                                           \
+write(*,'(A, A)') '[----------] Test ', testcase;                      \
+call flush(output_unit);                                               \
 block
 # define TEST_PRINT(msg)                                               \
-write(*,'(A, A)') '[     ---->] Test ', msg
+write(*,'(A, A)') '[          ] ', msg
 # define START_BLOCK(name)                                             \
 block;                                                                 \
 character(*), parameter :: testname = MACRO_STRINGIFY(name);           \
@@ -113,6 +113,7 @@ write(*,'(A, I3, A, A, A, E10.3, A)') ESCAPE//'[32m'//'[  PASSED  ]'//ESCAPE//'[
 end if;                                                                \
 call flush(output_unit);                                               \
 end block;                                                             \
+end associate;                                                         \
 end block;
 # define END_TESTPROGRAM                                               \
 write(*,'(A, I3, A, A)') '[==========] Ran ', nsuccess_all + nfailures_all, ' tests from ', __FILE__; \

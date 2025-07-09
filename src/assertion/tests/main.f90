@@ -16,7 +16,7 @@ end module
 #include "../include/assertion.inc"
 TESTPROGRAM(main)
 
-    TEST(string_tests)
+    TEST('string_tests')
         character(*), parameter :: s1 = 'TEST'
         character(:), allocatable :: s2
         
@@ -31,7 +31,7 @@ TESTPROGRAM(main)
         ASSERT_STRCASEEQ(s1, s2)
     END_TEST
 
-    TEST(logical_tests)
+    TEST('logical_tests')
         logical :: true = .true.
         logical :: false = .false.
 
@@ -46,7 +46,7 @@ TESTPROGRAM(main)
         
     END_TEST
 
-    TEST(equality_tests_for_types)
+    TEST('equality_tests_for_types')
         use test_object_type
 
         type(t_object), allocatable, target :: obj1
@@ -80,7 +80,7 @@ TESTPROGRAM(main)
         nullify(ptr)
     END_TEST
 
-    TEST(inequality_tests)
+    TEST('inequality_tests')
         double precision, parameter :: r1 = 1.0d0
         double precision :: r2 = 1.0d0
         double precision :: r3 = 2.0d0
@@ -108,7 +108,7 @@ TESTPROGRAM(main)
         ASSERT_GT(r3, r1)
     END_TEST
 
-    TEST(floating_point_tests)
+    TEST('floating_point_tests')
         real, parameter :: e1 = 1.0e0
         real :: e2 = 1.0e0
         real :: e3 = 2.0e0
