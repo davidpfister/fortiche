@@ -32,7 +32,7 @@ console(test)
 
     subroutine test_clp()
         character(:), allocatable :: cl
-        type(string), allocatable :: args(:)
+        type(argument), allocatable :: args(:)
         integer :: i
         
         cl = '"abc" d e'
