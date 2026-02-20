@@ -1,9 +1,9 @@
 # Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**. So, thank you for considering contributing to _fpm-modules_.
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**. So, thank you for considering contributing to _fortiche_.
 Please review and follow these guidelines to make the contribution process simple and effective for all involved. In return, the developers will help address your problem, evaluate changes, and guide you through your pull requests.
 
-By contributing to _fpm-modules_, you certify that you own or are allowed to share the content of your contribution under the same license.
+By contributing to _fortiche_, you certify that you own or are allowed to share the content of your contribution under the same license.
 
 ## Style
 
@@ -17,7 +17,7 @@ Good bug reports are extremely valuable to us—thank you!
 Before opening a bug report:
 
 1. Check if the issue has already been reported
-   ([issues](https://github.com/davidpfister/fpm-modules/issues)).
+   ([issues](https://github.com/davidpfister/fortiche/issues)).
 2. Check if it is still an issue or it has been fixed?
    Try to reproduce it with the latest version from the default branch.
 3. Isolate the problem and create a minimal test case.
@@ -25,7 +25,7 @@ Before opening a bug report:
 A good bug report should include all information needed to reproduce the bug.
 Please be as detailed as possible:
 
-1. Which version of _fpm-modules_ are you using? Please be specific.
+1. Which version of _fortiche_ are you using? Please be specific.
 2. What are the steps to reproduce the issue?
 3. What is the expected outcome?
 4. What happens instead?
@@ -37,7 +37,7 @@ minimal back-and-forth.
 
 If you have a suggestion that would make this project better, please create a pull request. You can also simply open an issue with the tag "enhancement".
 Don't forget to give the project a star! Thanks again!
-1. Open a [new issue](https://github.com/davidpfister/fpm-modules/issues/new) to
+1. Open a [new issue](https://github.com/davidpfister/fortiche/issues/new) to
    describe a bug or propose a new feature.
    Refer to the earlier sections on how to write a good bug report or feature    request.
 2. Discuss with the developers and reach consensus about what should be done about the bug or feature request.
@@ -51,7 +51,7 @@ Don't forget to give the project a star! Thanks again!
    The body of the PR should at least include a bullet-point summary of the
    changes, and a detailed description is encouraged.
    If the PR completely addresses the issue you opened in step 1, include in
-   the PR description the following line: ```Fixes #<issue-number>```. If your PR implements a feature that adds or changes the behavior of _fpm-modules_,
+   the PR description the following line: ```Fixes #<issue-number>```. If your PR implements a feature that adds or changes the behavior of _fortiche_,
    your PR must also include appropriate changes to the documentation and associated units tests.
 
 In brief, 
