@@ -51,13 +51,13 @@ else; \
 sout(i:i) = sin(i:i); \
 end if; \
 end do;
-# define REPORT_FAILURE(expected, actual) \
+# define REPORT_FAILURE(expected, actual, fmt) \
 nfailures = nfailures + 1; \
 call cpu_time(toc_assert); \
 write(output_unit,'(A, " (", I3, ") : error:")', advance='no') testname, __LINE__; \
 call flush(output_unit);write(output_unit,*) ''; \
-print*, '   Actual: ', actual; \
-print*, ' Expected: ', expected; \
+print fmt, '   Actual: ', actual; \
+print fmt, ' Expected: ', expected; \
 write(*,'(A, A, ". ", A, " line ", I3, " (", E10.3, " ms)")', advance='no') ANSI_FAILED, testcase, testname, __LINE__, toc_assert - tic_assert;\
 call flush(output_unit);write(output_unit,*) '';
 # define REPORT_SUCCESS \
@@ -103,10 +103,10 @@ end if; \
 call cpu_time(tic_assert) ; \
 write(output_unit,'("[ RUN      ] ", A, ". ", A, " at line ", I3)', advance='no') testcase, testname, __LINE__ ; \
 call flush(output_unit);write(output_unit,*) '';
-# define END_BLOCK(expected, actual, fatal) \
+# define END_BLOCK(expected, actual, fatal, fmt) \
 REPORT_SUCCESS \
 else; \
-REPORT_FAILURE(expected, actual) \
+REPORT_FAILURE(expected, actual, fmt) \
 if (fatal) stop 1; \
 end if ; \
 end block;
@@ -147,19 +147,19 @@ end program
 # define EXPECT_TRUE(condition) \
 START_BLOCK(EXPECT_TRUE) \
 if(condition .eqv. .true.) then; \
-END_BLOCK(.true., condition, .false.)
+END_BLOCK(.true., condition, .false., *)
 # define EXPECT_FALSE(condition) \
 START_BLOCK(EXPECT_FALSE) \
 if(condition .eqv. .false.) then; \
-END_BLOCK(.false., condition, .false.)
+END_BLOCK(.false., condition, .false., *)
 # define ASSERT_TRUE(condition) \
 START_BLOCK(ASSERT_TRUE) \
 if(condition .eqv. .true.) then; \
-END_BLOCK(.true., condition, .true.)
+END_BLOCK(.true., condition, .true., *)
 # define ASSERT_FALSE(condition) \
 START_BLOCK(ASSERT_FALSE) \
 if(condition .eqv. .false.) then; \
-END_BLOCK(.false., condition, .true.)
+END_BLOCK(.false., condition, .true., *)
 /**
   * Macros for testing equalities and inequalities.
   *
@@ -184,7 +184,7 @@ block ; \
 logical :: equals_; \
 equals_ = same_type_as(val1, val2) .and. loc(val1) == loc(val2) .and. storage_size(val1) == storage_size(val2) ;\
 if(equals_) then ; \
-END_BLOCK(val2, val1, .false.) \
+END_BLOCK(val2, val1, .false., *) \
 end block
 # define EXPECT_NSAME(val1, val2) \
 START_BLOCK(EXPECT_NSAME) \
@@ -192,7 +192,7 @@ block ; \
 logical :: equals_; \
 equals_ = same_type_as(val1, val2) .and. loc(val1) == loc(val2) .and. storage_size(val1) == storage_size(val2) ;\
 if(.not. equals_) then; \
-END_BLOCK(val2, val1, .false.) \
+END_BLOCK(val2, val1, .false., *) \
 end block
 # define EXPECT_BEQ(val1, val2) \
 START_BLOCK(EXPECT_BEQ) \
@@ -201,7 +201,7 @@ integer(kind=1), allocatable :: mold(:); \
 logical :: equals_; \
 equals_ = all(transfer(val1, mold) == transfer(val2, mold)); \
 if(equals_) then ; \
-END_BLOCK(val2, val1, .false.) \
+END_BLOCK(val2, val1, .false., *) \
 end block
 # define EXPECT_BNEQ(val1, val2) \
 START_BLOCK(EXPECT_BNEQ) \
@@ -210,32 +210,32 @@ integer(kind=1), allocatable :: mold(:); \
 logical :: equals_; \
 equals_ = all(transfer(val1, mold) == transfer(val2, mold)); \
 if(.not. equals_) then; \
-END_BLOCK(val2, val1, .false.) \
+END_BLOCK(val2, val1, .false., *) \
 end block
 # define EXPECT_EQ(val1, val2) \
 START_BLOCK(EXPECT_EQ) \
 if(val1 .eq. val2) then; \
-END_BLOCK(val2, val1, .false.)
+END_BLOCK(val2, val1, .false., *)
 # define EXPECT_NE(val1, val2) \
 START_BLOCK(EXPECT_NE) \
 if(val1 .ne. val2) then; \
-END_BLOCK(val2, val1, .false.)
+END_BLOCK(val2, val1, .false., *)
 # define EXPECT_LE(val1, val2) \
 START_BLOCK(EXPECT_LE) \
 if(val1 .le. val2) then; \
-END_BLOCK(val2, val1, .false.)
+END_BLOCK(val2, val1, .false., *)
 # define EXPECT_LT(val1, val2) \
 START_BLOCK(EXPECT_LT) \
 if(val1 .lt. val2) then; \
-END_BLOCK(val2, val1, .false.)
+END_BLOCK(val2, val1, .false., *)
 # define EXPECT_GE(val1, val2) \
 START_BLOCK(EXPECT_GE) \
 if(val1 .ge. val2) then; \
-END_BLOCK(val2, val1, .false.)
+END_BLOCK(val2, val1, .false., *)
 # define EXPECT_GT(val1, val2) \
 START_BLOCK(EXPECT_GT) \
 if(val1 .gt. val2) then; \
-END_BLOCK(val2, val1, .false.)
+END_BLOCK(val2, val1, .false., *)
 # define ASSERT_SAME(val1, val2) \
 START_BLOCK(ASSERT_SAME) \
 block ; \
@@ -244,7 +244,7 @@ logical :: equals_; \
 equals_ = same_type_as(val1, val2) .and. loc(val1) == loc(val2) .and. storage_size(val1) == storage_size(val2) ;\
 if(equals_) equals_ = all(transfer(val1, mold) == transfer(val2, mold)); \
 if(equals_) then; \
-END_BLOCK(val2, val1, .true.) \
+END_BLOCK(val2, val1, .true., *) \
 end block
 # define ASSERT_NSAME(val1, val2) \
 START_BLOCK(ASSERT_NSAME) \
@@ -254,7 +254,7 @@ logical :: equals_; \
 equals_ = same_type_as(val1, val2) .and. loc(val1) == loc(val2) .and. storage_size(val1) == storage_size(val2) ;\
 if(equals_) equals_ = all(transfer(val1, mold) == transfer(val2, mold)); \
 if(.not. equals_) then; \
-END_BLOCK(val2, val1, .true.) \
+END_BLOCK(val2, val1, .true., *) \
 end block
 # define ASSERT_BEQ(val1, val2) \
 START_BLOCK(ASSERT_BEQ) \
@@ -263,7 +263,7 @@ integer(kind=1), allocatable :: mold(:); \
 logical :: equals_; \
 equals_ = all(transfer(val1, mold) == transfer(val2, mold)); \
 if(equals_) then; \
-END_BLOCK(val2, val1, .true.) \
+END_BLOCK(val2, val1, .true., *) \
 end block
 # define ASSERT_BNEQ(val1, val2) \
 START_BLOCK(ASSERT_BNEQ) \
@@ -272,32 +272,32 @@ integer(kind=1), allocatable :: mold(:); \
 logical :: equals_; \
 equals_ = all(transfer(val1, mold) == transfer(val2, mold)); \
 if(.not. equals_) then; \
-END_BLOCK(val2, val1, .true.) \
+END_BLOCK(val2, val1, .true., *) \
 end block
 # define ASSERT_EQ(val1, val2) \
 START_BLOCK(ASSERT_EQ) \
 if(val1 .eq. val2) then; \
-END_BLOCK(val2, val1, .true.)
+END_BLOCK(val2, val1, .true., *)
 # define ASSERT_NE(val1, val2) \
 START_BLOCK(ASSERT_NE) \
 if(val1 .ne. val2) then; \
-END_BLOCK(val2, val1, .true.)
+END_BLOCK(val2, val1, .true., *)
 # define ASSERT_LE(val1, val2) \
 START_BLOCK(ASSERT_LE) \
 if(val1 .le. val2) then; \
-END_BLOCK(val2, val1, .true.)
+END_BLOCK(val2, val1, .true., *)
 # define ASSERT_LT(val1, val2) \
 START_BLOCK(ASSERT_LT) \
 if(val1 .lt. val2) then; \
-END_BLOCK(val2, val1, .true.)
+END_BLOCK(val2, val1, .true., *)
 # define ASSERT_GE(val1, val2) \
 START_BLOCK(ASSERT_GE) \
 if(val1 .ge. val2) then; \
-END_BLOCK(val2, val1, .true.)
+END_BLOCK(val2, val1, .true., *)
 # define ASSERT_GT(val1, val2) \
 START_BLOCK(ASSERT_GT) \
 if(val1 .gt. val2) then; \
-END_BLOCK(val2, val1, .true.)
+END_BLOCK(val2, val1, .true., *)
 /**
   * String Comparisons.  All tests treat NULL and any non-NULL string
   * as different. Two NULLs are equal.
@@ -314,11 +314,11 @@ END_BLOCK(val2, val1, .true.)
 # define EXPECT_STREQ(s1, s2) \
 START_BLOCK(EXPECT_STREQ) \
 if(s1 .eq. s2) then; \
-END_BLOCK(s2, s1, .false.)
+END_BLOCK(s2, s1, .false., '(A)')
 # define EXPECT_STRNE(s1, s2) \
 START_BLOCK(EXPECT_STRNE) \
 if(s1 .ne. s2) then; \
-END_BLOCK(s2, s1, .false.)
+END_BLOCK(s2, s1, .false., '(A)')
 # define EXPECT_STRCASEEQ(s1, s2) \
 START_BLOCK(EXPECT_STRCASEEQ) \
 block; \
@@ -328,7 +328,7 @@ integer :: i,j; \
 LOWERCASE(s1,s1l) \
 LOWERCASE(s2,s2l) \
 if(s1l .eq. s2l) then; \
-END_BLOCK(s2, s1, .false.) \
+END_BLOCK(s2, s1, .false., '(A)') \
 end block;
 # define EXPECT_STRCASENE(s1, s2) \
 START_BLOCK(EXPECT_STRCASENE) \
@@ -339,16 +339,16 @@ integer :: i,j; \
 LOWERCASE(s1,s1l) \
 LOWERCASE(s2,s2l) \
 if(s1l .ne. s2l) then; \
-END_BLOCK(s2, s1, .false.) \
+END_BLOCK(s2, s1, .false., '(A)') \
 end block;
 # define ASSERT_STREQ(s1, s2) \
 START_BLOCK(ASSERT_STREQ) \
 if(s1 .eq. s2) then; \
-END_BLOCK(s2, s1, .true.)
+END_BLOCK(s2, s1, .true., '(A)')
 # define ASSERT_STRNE(s1, s2) \
 START_BLOCK(ASSERT_STRNE) \
 if(s1 .ne. s2) then; \
-END_BLOCK(s2, s1, .true.)
+END_BLOCK(s2, s1, .true., '(A)')
 # define ASSERT_STRCASEEQ(s1, s2) \
 START_BLOCK(ASSERT_STRCASEEQ) \
 block; \
@@ -358,7 +358,7 @@ integer :: i,j; \
 LOWERCASE(s1,s1l) \
 LOWERCASE(s2,s2l) \
 if(s1l .eq. s2l) then; \
-END_BLOCK(s2, s1, .true.); \
+END_BLOCK(s2, s1, .true., '(A)'); \
 end block;
 # define ASSERT_STRCASENE(s1, s2) \
 START_BLOCK(ASSERT_STRCASENE) \
@@ -369,7 +369,7 @@ integer :: i,j; \
 LOWERCASE(s1,s1l) \
 LOWERCASE(s2,s2l) \
 if(s1l .ne. s2l) then; \
-END_BLOCK(s2, s1, .true.) \
+END_BLOCK(s2, s1, .true., '(A)') \
 end block;
 /**
   * Macros for comparing floating-point numbers.
@@ -384,40 +384,40 @@ end block;
 # define EXPECT_FLOAT_EQ(val1, val2) \
 START_BLOCK(EXPECT_FLOAT_EQ) \
 if(abs(real(val1, real32) - real(val2, real32)) .le. 2.0*spacing(max(abs(real(val1, real32)),abs(real(val2, real32))))) then; \
-END_BLOCK(val2, val1, .false.)
+END_BLOCK(val2, val1, .false., *)
 # define EXPECT_FLOAT_NE(val1, val2) \
 START_BLOCK(EXPECT_FLOAT_NE) \
 if(abs(real(val1, real32) - real(val2, real32)) .gt. 2.0*spacing(max(abs(real(val1, real32)),abs(real(val2, real32))))) then; \
-END_BLOCK(val2, val1, .false.)
+END_BLOCK(val2, val1, .false., *)
 # define EXPECT_DOUBLE_EQ(val1, val2) \
 START_BLOCK(EXPECT_DOUBLE_EQ) \
 if(abs(real(val1, real64) - real(val2, real64)) .le. 2.0*spacing(max(abs(real(val1, real64)),abs(real(val2, real64))))) then; \
-END_BLOCK(val2, val1, .false.)
+END_BLOCK(val2, val1, .false., *)
 # define EXPECT_DOUBLE_NE(val1, val2) \
 START_BLOCK(EXPECT_DOUBLE_NE) \
 if(abs(real(val1, real64) - real(val2, real64)) .gt. 2.0*spacing(max(abs(real(val1, real64)),abs(real(val2, real64))))) then; \
-END_BLOCK(val2, val1, .false.)
+END_BLOCK(val2, val1, .false., *)
 # define ASSERT_FLOAT_EQ(val1, val2) \
 START_BLOCK(ASSERT_FLOAT_EQ) \
 if(abs(real(val1, real32) - real(val2, real32)) .le. 2.0*spacing(max(abs(real(val1, real32)),abs(real(val2, real32))))) then; \
-END_BLOCK(val2, val1, .true.)
+END_BLOCK(val2, val1, .true., *)
 # define ASSERT_FLOAT_NE(val1, val2) \
 START_BLOCK(ASSERT_FLOAT_NE) \
 if(abs(real(val1, real32) - real(val2, real32)) .gt. 2.0*spacing(max(abs(real(val1, real32)),abs(real(val2, real32))))) then; \
-END_BLOCK(val2, val1, .true.)
+END_BLOCK(val2, val1, .true., *)
 # define ASSERT_DOUBLE_EQ(val1, val2) \
 START_BLOCK(ASSERT_DOUBLE_EQ) \
 if(abs(real(val1, real64) - real(val2, real64)) .le. 2.0*spacing(max(abs(real(val1, real64)),abs(real(val2, real64))))) then; \
-END_BLOCK(val2, val1, .true.)
+END_BLOCK(val2, val1, .true., *)
 # define ASSERT_DOUBLE_NE(val1, val2) \
 START_BLOCK(ASSERT_DOUBLE_NE) \
 if(abs(real(val1, real64) - real(val2, real64)) .gt. 2.0*spacing(max(abs(real(val1, real64)),abs(real(val2, real64))))) then; \
-END_BLOCK(val2, val1, .true.)
+END_BLOCK(val2, val1, .true., *)
 # define EXPECT_NEAR(val1, val2, abs_error) \
 START_BLOCK(EXPECT_NEAR) \
 if(abs(val1 - val2) < abs_error) then; \
-END_BLOCK(val2, val1, .false.)
+END_BLOCK(val2, val1, .false., *)
 # define ASSERT_NEAR(val1, val2, abs_error) \
 START_BLOCK(ASSERT_NEAR) \
 if(abs(val1 - val2) < abs_error) then; \
-END_BLOCK(val2, val1, .true.)
+END_BLOCK(val2, val1, .true., *)
